@@ -285,7 +285,17 @@ export default function DemoPage() {
   return (
     <div className="container mx-auto p-6 max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">Server-Driven UI Demo</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-4xl font-bold">Server-Driven UI Demo</h1>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => window.location.href = '/'}>
+              ← Home
+            </Button>
+            <Button variant="outline" onClick={() => window.location.href = '/demo/container-example'}>
+              Container Examples
+            </Button>
+          </div>
+        </div>
         <p className="text-muted-foreground">
           shadcn/ui 컴포넌트를 활용한 스트리밍 서버드리븐 UI 라이브러리
         </p>

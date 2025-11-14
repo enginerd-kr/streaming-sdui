@@ -14,6 +14,22 @@ export type {
   ActionHandler,
   Condition,
   StreamingStatus,
+  // Component Categories
+  ComponentCategory,
+  ContainerType,
+  PrimitiveType,
+  HTMLElementType,
+  ComponentType,
+  // Container Props
+  BaseContainerProps,
+  ScreenProps,
+  AppBarProps,
+  StackProps,
+  ZStackProps,
+  ScrollViewProps,
+  GridProps,
+  ContainerProps,
+  SafeAreaProps,
 } from './types';
 
 // Hooks
@@ -22,6 +38,19 @@ export type { UseStreamingUIOptions, UseStreamingUIReturn } from './hooks/useStr
 
 // Components
 export { StreamingUIRenderer } from '@/components/sdui/StreamingUIRenderer';
+
+// Container Components
+export {
+  Screen,
+  AppBar,
+  VStack,
+  HStack,
+  ZStack,
+  ScrollView,
+  Grid,
+  Container,
+  SafeArea,
+} from '@/components/sdui/containers';
 
 // Parsers
 export {
@@ -37,4 +66,9 @@ export {
   extendRegistry,
   hasComponent,
   getComponent,
-} from './component-registry';
+  getComponentCategory,
+  createRegistry,
+  containerRegistry,
+  primitiveRegistry,
+  htmlRegistry,
+} from './registry';

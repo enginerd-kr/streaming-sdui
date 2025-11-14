@@ -83,6 +83,11 @@ export default function Home() {
               데모 보기
             </Button>
           </Link>
+          <Link href="/demo/container-example">
+            <Button size="lg" variant="outline" className="text-lg">
+              Container 예제
+            </Button>
+          </Link>
           <a
             href="https://ui.shadcn.com"
             target="_blank"

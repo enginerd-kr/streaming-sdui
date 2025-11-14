@@ -2,7 +2,7 @@
 
 import React from 'react';
 import type { UINode, RenderContext } from '@/lib/sdui/types';
-import { defaultRegistry, getComponent, hasComponent } from '@/lib/sdui/component-registry';
+import { defaultRegistry, getComponent, hasComponent } from '@/lib/sdui/registry';
 
 interface StreamingUIRendererProps {
   node: UINode | null;
