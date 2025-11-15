@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { Screen } from '@sdui/react';
 import { AppBar } from '@sdui/react';
 import { VStack, HStack } from '@sdui/react';
@@ -308,15 +309,19 @@ export default function ContainerExamplePage() {
       <AppBar
         title="Container Components Demo"
         leading={
-          <Button variant="ghost" size="sm" onClick={() => window.location.href = '/'}>
-            ← Home
-          </Button>
+          <Link href="/">
+            <Button variant="ghost" size="sm">
+              ← Home
+            </Button>
+          </Link>
         }
         actions={
           <>
-            <Button variant="ghost" size="sm" onClick={() => window.location.href = '/demo'}>
-              Demo
-            </Button>
+            <Link href="/demo">
+              <Button variant="ghost" size="sm">
+                Demo
+              </Button>
+            </Link>
             <Button variant="default" size="sm">Login</Button>
           </>
         }

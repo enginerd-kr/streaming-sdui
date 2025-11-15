@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { createParser, type UINode, type ParserFormat } from '@sdui/core';
 import { mockFetch } from '@/lib/mock-streaming-api';
 import { StreamingUIRenderer } from '@sdui/react';
@@ -490,12 +491,16 @@ export default function DemoPage() {
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-4xl font-bold">Server-Driven UI Demo</h1>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => window.location.href = '/'}>
-              ← Home
-            </Button>
-            <Button variant="outline" onClick={() => window.location.href = '/demo/container-example'}>
-              Container Examples
-            </Button>
+            <Link href="/">
+              <Button variant="outline">
+                ← Home
+              </Button>
+            </Link>
+            <Link href="/demo/container-example">
+              <Button variant="outline">
+                Container Examples
+              </Button>
+            </Link>
           </div>
         </div>
         <p className="text-muted-foreground">
