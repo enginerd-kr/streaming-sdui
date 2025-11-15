@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { UINode, StreamAction } from '../types';
-import { createParser } from '../streaming-parser';
+import { createParser, type ParserFormat } from '../parsers';
 
 export interface UseStreamingUIOptions {
-  /** 스트리밍 형식 */
-  format?: 'json' | 'jsonl' | 'sse';
+  /** 스트리밍 형식 (json, jsonl, dsl, sse) */
+  format?: ParserFormat;
 
   /** 자동 시작 여부 */
   autoStart?: boolean;
@@ -79,7 +79,7 @@ export function useStreamingUI(options: UseStreamingUIOptions = {}): UseStreamin
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ ...payload, format }), // 서버에 포맷 전달
         signal: abortControllerRef.current.signal,
       });
 
@@ -120,7 +120,7 @@ export function useStreamingUI(options: UseStreamingUIOptions = {}): UseStreamin
         onError?.(error);
       }
     }
-  }, [onError, onComplete, onStart]);
+  }, [format, onError, onComplete, onStart]);
 
   /**
    * 스트리밍 중단

@@ -6,9 +6,8 @@ shadcn/ui 컴포넌트를 활용한 스트리밍 서버드리븐 UI 라이브러
 
 - **실시간 스트리밍 렌더링**: LLM이 생성하는 UI를 실시간으로 렌더링
 - **shadcn/ui 통합**: 아름다운 shadcn/ui 컴포넌트를 동적으로 조합
-- **TypeScript 지원**: 완전한 타입 안정성
-- **애니메이션**: Framer Motion 기반 부드러운 전환 효과
-- **유연한 파싱**: JSON, JSONL, SSE 등 다양한 스트리밍 형식 지원
+- **다중 포맷 지원**: JSON, JSONL, DSL, SSE 등 다양한 형식 지원
+- **🆕 DSL**: 80% 토큰 절감! LLM 친화적인 간결한 문법
 
 ## 🚀 시작하기
 
@@ -36,7 +35,7 @@ import { StreamingUIRenderer } from '@/components/sdui/StreamingUIRenderer';
 
 function MyComponent() {
   const { uiTree, isStreaming, start } = useStreamingUI({
-    format: 'jsonl',
+    format: 'dsl', // 'json', 'jsonl', 'dsl', 'sse' 중 선택
     onComplete: () => console.log('UI 생성 완료!'),
   });
 
@@ -57,7 +56,39 @@ function MyComponent() {
 }
 ```
 
-### UINode JSON 스키마
+### 🆕 DSL (권장)
+
+LLM이 80% 적은 토큰으로 UI를 생성할 수 있는 간결한 문법입니다!
+
+```text
+Card
+  @className: w-full
+
+  CardHeader
+    CardTitle: Hello World
+
+  CardContent
+    VStack
+      @spacing: 4
+
+      Button: Click Me
+
+      Input
+        @placeholder: Enter text...
+```
+
+**특징**:
+- 들여쓰기로 중첩 구조 표현
+- `@`로 속성 지정
+- `ComponentType: Text` 형태로 간단한 텍스트 추가
+- `//`로 주석 작성
+- ID는 자동 생성
+
+**토큰 비교**:
+- JSON: ~60 토큰
+- DSL: ~12 토큰 (80% 절감!)
+
+### UINode JSON 스키마 (레거시)
 
 서버에서 전송하는 UI는 다음과 같은 JSON 형식을 따릅니다:
 
@@ -234,7 +265,6 @@ export async function POST(request: NextRequest) {
 - **A/B 테스팅**: 서버에서 UI 변형 제어
 - **개인화**: 사용자 선호도에 맞춘 UI 생성
 - **AI 기반 UI**: LLM이 자연어로부터 UI 생성
-- **노코드 빌더**: 드래그앤드롭 없이 JSON으로 UI 구성
 
 ## 🤝 기여
 
@@ -248,4 +278,3 @@ MIT
 
 - [shadcn/ui](https://ui.shadcn.com)
 - [Next.js](https://nextjs.org)
-- [Framer Motion](https://www.framer.com/motion/)

@@ -7,13 +7,61 @@ import type { StreamAction, UINode } from '@/lib/sdui/types';
  */
 export async function POST(request: NextRequest) {
   try {
-    const { prompt, context } = await request.json();
+    const { prompt, context, format = 'jsonl' } = await request.json();
+
+    // DSL 포맷은 아직 서버 구현이 필요
+    // 데모 API는 JSON 기반이므로 DSL 요청 시 JSONL로 폴백
+    const actualFormat = format === 'dsl' ? 'jsonl' : format;
 
     // ReadableStream 생성
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
         try {
+          // DSL 포맷 요청 시 안내 메시지
+          if (format === 'dsl') {
+            const infoAction: StreamAction = {
+              action: 'create',
+              component: {
+                id: 'dsl-info',
+                type: 'Card',
+                props: { className: 'border-orange-500' },
+                children: [
+                  {
+                    id: 'dsl-info-header',
+                    type: 'CardHeader',
+                    children: [
+                      {
+                        id: 'dsl-info-title',
+                        type: 'CardTitle',
+                        children: ['⚠️ DSL 데모 모드'],
+                      },
+                      {
+                        id: 'dsl-info-desc',
+                        type: 'CardDescription',
+                        children: ['데모 API는 JSON 형식으로 응답합니다. 실제 LLM 연동 시 DSL로 응답하도록 구현할 수 있습니다.'],
+                      },
+                    ],
+                  },
+                  {
+                    id: 'dsl-info-content',
+                    type: 'CardContent',
+                    children: [
+                      {
+                        id: 'dsl-example',
+                        type: 'pre',
+                        props: { className: 'bg-muted p-3 rounded text-xs' },
+                        children: ['Card\n  @className: w-full\n  CardHeader\n    CardTitle: Hello\n  CardContent\n    Button: Click Me'],
+                      },
+                    ],
+                  },
+                ],
+              },
+            };
+            controller.enqueue(encoder.encode(JSON.stringify(infoAction) + '\n'));
+            await sleep(500);
+          }
+
           // 실제 환경에서는 여기서 LLM API를 호출
           // 현재는 데모용 UI를 생성
           await generateDemoUI(controller, encoder, prompt, context);

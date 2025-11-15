@@ -10,21 +10,34 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Switch } from '@/components/ui/switch';
+import type { UINode } from '@/lib/sdui/types';
 
-type StreamFormat = 'jsonl' | 'sse' | 'json';
-type RenderMode = 'streaming' | 'static';
+// 데이터 포맷 (무엇을)
+type DataFormat = 'json' | 'dsl';
+
+// 전송 방식 (어떻게) - ParserFormat과 호환
+type TransportType = 'jsonl' | 'sse' | 'json';
+
+// 모드
+type RenderMode = 'streaming' | 'normal';
 
 export default function DemoPage() {
   const [prompt, setPrompt] = useState('');
-  const [format, setFormat] = useState<StreamFormat>('jsonl');
+  const [dataFormat, setDataFormat] = useState<DataFormat>('dsl');
+  const [transportType, setTransportType] = useState<TransportType>('jsonl');
   const [renderMode, setRenderMode] = useState<RenderMode>('streaming');
   const [staticUITree, setStaticUITree] = useState<any>(null);
   const [isLoadingStatic, setIsLoadingStatic] = useState(false);
   const [staticError, setStaticError] = useState<string | null>(null);
   const [selectedPreset, setSelectedPreset] = useState<string>('dashboard');
 
+  // 실제 파서 포맷 결정
+  // 데모 API는 항상 JSON StreamAction을 반환
+  // 데이터 포맷과 관계없이 전송 프로토콜 사용
+  const actualFormat = transportType;
+
   const { uiTree, isStreaming, error, start, reset } = useStreamingUI({
-    format,
+    format: actualFormat,
     onStart: () => console.log('Streaming started'),
     onComplete: () => console.log('Streaming completed'),
     onError: (err) => console.error('Streaming error:', err),
@@ -47,9 +60,13 @@ export default function DemoPage() {
       // 스트리밍 모드
       setStaticUITree(null);
       setStaticError(null);
-      await start('/api/generate-ui', { prompt });
+      await start('/api/generate-ui', {
+        prompt,
+        format: dataFormat,
+        transport: transportType
+      });
     } else {
-      // 정적 모드 (일반 JSON)
+      // 일반 모드 (한 번에)
       setIsLoadingStatic(true);
       setStaticError(null);
       reset(); // 스트리밍 상태 초기화
@@ -58,7 +75,10 @@ export default function DemoPage() {
         const response = await fetch('/api/generate-ui-static', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt }),
+          body: JSON.stringify({
+            prompt,
+            format: dataFormat
+          }),
         });
 
         if (!response.ok) {
@@ -79,6 +99,68 @@ export default function DemoPage() {
     reset();
     setStaticUITree(null);
     setStaticError(null);
+  };
+
+  // UINode를 DSL 문자열로 변환
+  const convertToDSL = (node: UINode, indent = 0): string => {
+    const spaces = '  '.repeat(indent);
+    let result = '';
+
+    // 컴포넌트 타입
+    result += `${spaces}${node.type}`;
+
+    // 인라인 텍스트가 있는 경우 (children이 단일 문자열)
+    if (node.children?.length === 1 && typeof node.children[0] === 'string') {
+      result += `: ${node.children[0]}\n`;
+
+      // id 추가
+      if (node.id) {
+        result += `${spaces}  @id: ${node.id}\n`;
+      }
+
+      // props 추가
+      if (node.props) {
+        for (const [key, value] of Object.entries(node.props)) {
+          result += `${spaces}  @${key}: ${typeof value === 'object' ? JSON.stringify(value) : value}\n`;
+        }
+      }
+      return result;
+    }
+
+    result += '\n';
+
+    // ID 추가
+    if (node.id) {
+      result += `${spaces}  @id: ${node.id}\n`;
+    }
+
+    // Props 추가
+    if (node.props) {
+      for (const [key, value] of Object.entries(node.props)) {
+        result += `${spaces}  @${key}: ${typeof value === 'object' ? JSON.stringify(value) : value}\n`;
+      }
+    }
+
+    // Actions 추가 (간소화)
+    if (node.actions) {
+      for (const [eventName, action] of Object.entries(node.actions)) {
+        const actionType = typeof action === 'object' && action !== null && 'type' in action ? action.type : 'action';
+        result += `${spaces}  @${eventName}: ${actionType}\n`;
+      }
+    }
+
+    // Children 추가
+    if (node.children) {
+      for (const child of node.children) {
+        if (typeof child === 'string') {
+          result += `${spaces}  "${child}"\n`;
+        } else {
+          result += convertToDSL(child, indent + 1);
+        }
+      }
+    }
+
+    return result;
   };
 
   const presetPrompts = [
@@ -186,25 +268,77 @@ export default function DemoPage() {
       label: 'Cards',
       value: 'Create a product card grid',
       schema: {
-        id: 'product-card-0',
-        type: 'Card',
-        props: { className: 'mb-4' },
+        id: 'product-grid',
+        type: 'div',
+        props: { className: 'grid grid-cols-3 gap-4' },
         children: [
           {
-            id: 'product-header-0',
-            type: 'CardHeader',
+            id: 'product-card-1',
+            type: 'Card',
             children: [
-              { id: 'product-title-0', type: 'CardTitle', children: ['Product 1'] },
-              { id: 'product-desc-0', type: 'CardDescription', children: ['A great product'] },
+              {
+                id: 'product-header-1',
+                type: 'CardHeader',
+                children: [
+                  { id: 'product-title-1', type: 'CardTitle', children: ['Product 1'] },
+                  { id: 'product-desc-1', type: 'CardDescription', children: ['Premium quality product'] },
+                ],
+              },
+              {
+                id: 'product-footer-1',
+                type: 'CardFooter',
+                props: { className: 'flex justify-between items-center' },
+                children: [
+                  { id: 'product-price-1', type: 'span', props: { className: 'text-2xl font-bold' }, children: ['$99'] },
+                  { id: 'product-btn-1', type: 'Button', children: ['Add to Cart'] },
+                ],
+              },
             ],
           },
           {
-            id: 'product-footer-0',
-            type: 'CardFooter',
-            props: { className: 'flex justify-between items-center' },
+            id: 'product-card-2',
+            type: 'Card',
             children: [
-              { id: 'product-price-0', type: 'span', props: { className: 'text-2xl font-bold' }, children: ['$99'] },
-              { id: 'product-btn-0', type: 'Button', children: ['Add to Cart'] },
+              {
+                id: 'product-header-2',
+                type: 'CardHeader',
+                children: [
+                  { id: 'product-title-2', type: 'CardTitle', children: ['Product 2'] },
+                  { id: 'product-desc-2', type: 'CardDescription', children: ['Best seller item'] },
+                ],
+              },
+              {
+                id: 'product-footer-2',
+                type: 'CardFooter',
+                props: { className: 'flex justify-between items-center' },
+                children: [
+                  { id: 'product-price-2', type: 'span', props: { className: 'text-2xl font-bold' }, children: ['$149'] },
+                  { id: 'product-btn-2', type: 'Button', children: ['Add to Cart'] },
+                ],
+              },
+            ],
+          },
+          {
+            id: 'product-card-3',
+            type: 'Card',
+            children: [
+              {
+                id: 'product-header-3',
+                type: 'CardHeader',
+                children: [
+                  { id: 'product-title-3', type: 'CardTitle', children: ['Product 3'] },
+                  { id: 'product-desc-3', type: 'CardDescription', children: ['Limited edition'] },
+                ],
+              },
+              {
+                id: 'product-footer-3',
+                type: 'CardFooter',
+                props: { className: 'flex justify-between items-center' },
+                children: [
+                  { id: 'product-price-3', type: 'span', props: { className: 'text-2xl font-bold' }, children: ['$199'] },
+                  { id: 'product-btn-3', type: 'Button', children: ['Add to Cart'] },
+                ],
+              },
             ],
           },
         ],
@@ -384,24 +518,52 @@ export default function DemoPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* 렌더링 모드 선택 */}
+              {/* 1. 데이터 포맷 선택 */}
               <div className="space-y-3">
-                <Label className="text-sm font-medium">렌더링 모드</Label>
+                <Label className="text-sm font-medium">1. 데이터 포맷</Label>
+                <RadioGroup value={dataFormat} onValueChange={(v) => setDataFormat(v as DataFormat)} disabled={isStreaming || isLoadingStatic}>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="dsl" id="format-dsl" />
+                    <Label htmlFor="format-dsl" className="font-normal cursor-pointer">
+                      <div>
+                        <div className="font-medium flex items-center gap-2">
+                          🆕 DSL
+                          <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">80% 절감</span>
+                        </div>
+                        <div className="text-xs text-muted-foreground">간결한 LLM 친화적 문법</div>
+                      </div>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="json" id="format-json" />
+                    <Label htmlFor="format-json" className="font-normal cursor-pointer">
+                      <div>
+                        <div className="font-medium">JSON</div>
+                        <div className="text-xs text-muted-foreground">전통적인 JSON 형식</div>
+                      </div>
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              {/* 2. 전송 모드 선택 */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium">2. 전송 모드</Label>
                 <RadioGroup value={renderMode} onValueChange={(v) => setRenderMode(v as RenderMode)} disabled={isStreaming || isLoadingStatic}>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="streaming" id="streaming" />
-                    <Label htmlFor="streaming" className="font-normal cursor-pointer">
+                    <RadioGroupItem value="streaming" id="mode-streaming" />
+                    <Label htmlFor="mode-streaming" className="font-normal cursor-pointer">
                       <div>
-                        <div className="font-medium">스트리밍 모드</div>
+                        <div className="font-medium">스트리밍</div>
                         <div className="text-xs text-muted-foreground">UI를 점진적으로 생성 (ChatGPT 스타일)</div>
                       </div>
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="static" id="static" />
-                    <Label htmlFor="static" className="font-normal cursor-pointer">
+                    <RadioGroupItem value="normal" id="mode-normal" />
+                    <Label htmlFor="mode-normal" className="font-normal cursor-pointer">
                       <div>
-                        <div className="font-medium">일반 모드</div>
+                        <div className="font-medium">일반</div>
                         <div className="text-xs text-muted-foreground">완성된 UI를 한 번에 표시</div>
                       </div>
                     </Label>
@@ -409,39 +571,39 @@ export default function DemoPage() {
                 </RadioGroup>
               </div>
 
-              {/* 포맷 선택 (스트리밍 모드일 때만) */}
+              {/* 3. 전송 방식 선택 (스트리밍 모드일 때만) */}
               {renderMode === 'streaming' && (
                 <div className="space-y-3">
-                  <Label className="text-sm font-medium">스트리밍 포맷</Label>
-                  <RadioGroup value={format} onValueChange={(v) => setFormat(v as StreamFormat)} disabled={isStreaming}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="jsonl" id="jsonl" />
-                    <Label htmlFor="jsonl" className="font-normal cursor-pointer">
-                      <div>
-                        <div className="font-medium">JSONL</div>
-                        <div className="text-xs text-muted-foreground">JSON Lines (newline-delimited)</div>
-                      </div>
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="sse" id="sse" />
-                    <Label htmlFor="sse" className="font-normal cursor-pointer">
-                      <div>
-                        <div className="font-medium">SSE</div>
-                        <div className="text-xs text-muted-foreground">Server-Sent Events</div>
-                      </div>
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="json" id="json" />
-                    <Label htmlFor="json" className="font-normal cursor-pointer">
-                      <div>
-                        <div className="font-medium">Streaming JSON</div>
-                        <div className="text-xs text-muted-foreground">Partial JSON parsing</div>
-                      </div>
-                    </Label>
-                  </div>
-                </RadioGroup>
+                  <Label className="text-sm font-medium">3. 전송 프로토콜 (스트리밍)</Label>
+                  <RadioGroup value={transportType} onValueChange={(v) => setTransportType(v as TransportType)} disabled={isStreaming}>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="jsonl" id="transport-jsonl" />
+                      <Label htmlFor="transport-jsonl" className="font-normal cursor-pointer">
+                        <div>
+                          <div className="font-medium">JSONL (추천)</div>
+                          <div className="text-xs text-muted-foreground">JSON Lines - 한 줄씩 파싱</div>
+                        </div>
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="sse" id="transport-sse" />
+                      <Label htmlFor="transport-sse" className="font-normal cursor-pointer">
+                        <div>
+                          <div className="font-medium">SSE</div>
+                          <div className="text-xs text-muted-foreground">Server-Sent Events</div>
+                        </div>
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="json" id="transport-json" />
+                      <Label htmlFor="transport-json" className="font-normal cursor-pointer">
+                        <div>
+                          <div className="font-medium">Streaming JSON</div>
+                          <div className="text-xs text-muted-foreground">부분 JSON 파싱</div>
+                        </div>
+                      </Label>
+                    </div>
+                  </RadioGroup>
                 </div>
               )}
             </CardContent>
@@ -498,7 +660,7 @@ export default function DemoPage() {
         <Tabs defaultValue="usage">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="usage">사용법</TabsTrigger>
-            <TabsTrigger value="schema">JSON 스키마</TabsTrigger>
+            <TabsTrigger value="schema">스키마</TabsTrigger>
             <TabsTrigger value="features">기능</TabsTrigger>
           </TabsList>
 
@@ -535,20 +697,23 @@ function MyComponent() {
             <Card>
               <CardHeader>
                 <CardTitle>
-                  {presetPrompts.find(p => p.id === selectedPreset)?.label} 예제 JSON 스키마
+                  {presetPrompts.find(p => p.id === selectedPreset)?.label} 예제{' '}
+                  {dataFormat === 'dsl' ? 'DSL' : 'JSON'} 스키마
                 </CardTitle>
                 <CardDescription>
-                  선택한 프리셋의 실제 UINode 구조
+                  선택한 프리셋의 {dataFormat === 'dsl' ? 'DSL' : 'JSON'} 형식
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
                   <code>
-                    {JSON.stringify(
-                      presetPrompts.find(p => p.id === selectedPreset)?.schema,
-                      null,
-                      2
-                    )}
+                    {dataFormat === 'dsl'
+                      ? convertToDSL(presetPrompts.find(p => p.id === selectedPreset)?.schema as UINode)
+                      : JSON.stringify(
+                          presetPrompts.find(p => p.id === selectedPreset)?.schema,
+                          null,
+                          2
+                        )}
                   </code>
                 </pre>
               </CardContent>
@@ -575,6 +740,7 @@ function MyComponent() {
                   <CardTitle>지원 형식</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
+                  <div>🆕 DSL (80% 토큰 절감)</div>
                   <div>📦 JSON Lines (JSONL)</div>
                   <div>📦 Server-Sent Events (SSE)</div>
                   <div>📦 Streaming JSON</div>

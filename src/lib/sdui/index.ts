@@ -52,12 +52,28 @@ export {
   SafeArea,
 } from '@/components/sdui/containers';
 
-// Parsers
+// Parsers (New Multi-Format Architecture)
 export {
+  createParser,
+  detectFormat,
+  getContentType,
+  // Base Interface
+  type IStreamParser,
+  type ParserMetadata,
+  type ParserFormat,
+  // JSON Parsers
   StreamingJSONParser,
   JSONLinesParser,
   SSEParser,
-  createParser,
+  // DSL Parser
+  DSLParser,
+} from './parsers';
+
+// Legacy Parser (Deprecated - use parsers/ instead)
+export {
+  StreamingJSONParser as LegacyStreamingJSONParser,
+  JSONLinesParser as LegacyJSONLinesParser,
+  SSEParser as LegacySSEParser,
 } from './streaming-parser';
 
 // Component Registry

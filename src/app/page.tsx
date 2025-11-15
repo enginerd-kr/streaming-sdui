@@ -48,39 +48,87 @@ export default function Home() {
 
           <Card>
             <CardHeader>
-              <CardTitle>⚡ TypeScript 지원</CardTitle>
+              <CardTitle>✨ DSL</CardTitle>
               <CardDescription>
-                완전한 타입 안정성
+                80% 토큰 절감
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                강력한 타입 시스템으로 안전하게 개발할 수 있습니다.
-                IDE 자동완성과 오류 검사를 지원합니다.
+                간결한 문법으로 LLM이 훨씬 적은 토큰으로
+                UI를 생성할 수 있어 비용과 속도 면에서 유리합니다.
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>🎭 애니메이션</CardTitle>
+              <CardTitle>📡 다양한 전송 프로토콜</CardTitle>
               <CardDescription>
-                Framer Motion 기반 부드러운 전환
+                JSONL, SSE, Streaming JSON 지원
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                컴포넌트가 나타날 때 자연스러운 애니메이션이 적용되어
-                사용자 경험을 향상시킵니다.
+                여러 스트리밍 프로토콜을 지원하여 다양한 환경에서
+                유연하게 UI를 전송할 수 있습니다.
               </p>
+            </CardContent>
+          </Card>
+
+          <Card className="md:col-span-2 border shadow-none">
+            <CardHeader>
+              <CardTitle>🆕 DSL</CardTitle>
+              <CardDescription>
+                80% 토큰 절감! LLM 친화적인 간결한 문법
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">
+                간결한 문법으로 UI를 정의합니다.
+                LLM이 훨씬 적은 토큰으로 UI를 생성할 수 있어 비용과 속도 면에서 유리합니다.
+              </p>
+              <div className="bg-muted p-3 rounded-md text-sm font-mono">
+                <div className="text-blue-600">Card</div>
+                <div className="ml-4 text-purple-600">@className: w-full</div>
+                <div className="ml-4 text-blue-600">CardHeader</div>
+                <div className="ml-8 text-blue-600">CardTitle: Hello World</div>
+                <div className="ml-4 text-blue-600">CardContent</div>
+                <div className="ml-8 text-muted-foreground">&quot;Card content here&quot;</div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="md:col-span-2 border shadow-none">
+            <CardHeader>
+              <CardTitle>📦 JSON 포맷</CardTitle>
+              <CardDescription>
+                검증된 표준 데이터 형식
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">
+                전통적인 JSON 형식도 완벽하게 지원합니다.
+                표준 도구와의 호환성이 뛰어나며, 디버깅과 검증이 용이합니다.
+              </p>
+              <div className="bg-muted p-3 rounded-md text-sm font-mono">
+                <div className="text-purple-600">{`{`}</div>
+                <div className="ml-4 text-green-600">&quot;type&quot;: &quot;Card&quot;,</div>
+                <div className="ml-4 text-green-600">&quot;props&quot;: {`{`} &quot;className&quot;: &quot;w-full&quot; {`}`},</div>
+                <div className="ml-4 text-green-600">&quot;children&quot;: [</div>
+                <div className="ml-8 text-blue-600">{`{ "type": "CardHeader", ... }`},</div>
+                <div className="ml-8 text-blue-600">{`{ "type": "CardContent", ... }`}</div>
+                <div className="ml-4 text-green-600">]</div>
+                <div className="text-purple-600">{`}`}</div>
+              </div>
             </CardContent>
           </Card>
         </div>
 
-        <div className="flex justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-4">
           <Link href="/demo">
-            <Button size="lg" className="text-lg">
-              데모 보기
+            <Button size="lg" className="text-lg bg-gradient-to-r from-blue-600 to-purple-600">
+              스트리밍 데모
             </Button>
           </Link>
           <Link href="/demo/container-example">
@@ -102,6 +150,9 @@ export default function Home() {
         <Card className="bg-muted">
           <CardHeader>
             <CardTitle>빠른 시작</CardTitle>
+            <CardDescription>
+              DSL 포맷으로 80% 토큰 절감! 🚀
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <pre className="bg-background p-4 rounded-md overflow-x-auto text-sm">
@@ -109,11 +160,15 @@ export default function Home() {
 import { StreamingUIRenderer } from '@/components/sdui/StreamingUIRenderer';
 
 function App() {
-  const { uiTree, start } = useStreamingUI();
+  const { uiTree, start } = useStreamingUI({
+    format: 'dsl', // JSON 대비 80% 토큰 절감!
+  });
 
   return (
     <>
-      <button onClick={() => start('/api/generate-ui', { prompt: 'dashboard' })}>
+      <button onClick={() => start('/api/generate-ui', {
+        prompt: 'Create a dashboard'
+      })}>
         Generate UI
       </button>
       <StreamingUIRenderer node={uiTree} />
