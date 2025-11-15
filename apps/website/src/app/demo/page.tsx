@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { createParser, type UINode, type ParserFormat } from '@sdui/core';
+import { mockFetch } from '@/lib/mock-streaming-api';
 import { StreamingUIRenderer } from '@sdui/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,8 +29,6 @@ export default function DemoPage() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedPreset, setSelectedPreset] = useState<string>('dashboard');
-
-  const parserRef = useRef(createParser(transportType as ParserFormat));
 
   // Action handler for interactive components
   const handleAction = async (actionType: string, payload?: Record<string, any>) => {
@@ -103,8 +102,8 @@ export default function DemoPage() {
     return result;
   };
 
-  // 클라이언트 사이드 스트리밍 시뮬레이션
-  const simulateStreaming = async (schema: UINode) => {
+  // Mock API를 사용한 스트리밍 시뮬레이션
+  const start = async (url: string) => {
     setIsStreaming(true);
     setError(null);
     setUITree(null);
@@ -114,43 +113,26 @@ export default function DemoPage() {
     parser.reset();
 
     try {
-      // DSL 포맷으로 변환
-      const dslString = convertToDSL(schema);
-      const lines = dslString.split('\n').filter(line => line.trim());
-
-      // 청크로 나누기 (점진적으로 표시)
-      const chunkSize = Math.max(2, Math.floor(lines.length / 15));
-
-      for (let i = 0; i < lines.length; i += chunkSize) {
-        const chunk = lines.slice(0, i + chunkSize).join('\n');
-
-        const action = {
-          type: 'ui.update' as const,
-          format: 'dsl' as const,
-          data: chunk,
-        };
-
-        let encoded: string;
-        if (transportType === 'jsonl') {
-          encoded = JSON.stringify(action) + '\n';
-        } else if (transportType === 'sse') {
-          encoded = `data: ${JSON.stringify(action)}\n\n`;
-        } else {
-          encoded = JSON.stringify(action);
-        }
-
-        // 파서에 데이터 추가
-        const parsedActions = parser.append(encoded);
-        for (const act of parsedActions) {
-          // act는 { type: 'ui.update', uiTree, ... } 형태
-          if ('uiTree' in act && act.uiTree) {
-            setUITree(act.uiTree as UINode);
+      // Mock API 호출
+      await mockFetch(
+        url,
+        (chunk) => {
+          // 청크를 파서에 전달
+          const parsedActions = parser.append(chunk);
+          for (const act of parsedActions) {
+            // act는 { type: 'ui.update', uiTree, ... } 형태
+            if ('uiTree' in act && act.uiTree) {
+              setUITree(act.uiTree as UINode);
+            }
           }
+        },
+        {
+          format: dataFormat,
+          transport: transportType as ParserFormat,
+          chunkSize: 2,
+          delay: 80,
         }
-
-        // 스트리밍 효과를 위한 딜레이
-        await new Promise(resolve => setTimeout(resolve, 80));
-      }
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
@@ -173,9 +155,12 @@ export default function DemoPage() {
       return;
     }
 
+    // API URL 생성
+    const apiUrl = `/api/generate-ui/${matchedPreset.id}`;
+
     if (renderMode === 'streaming') {
-      // 스트리밍 모드 (클라이언트 시뮬레이션)
-      await simulateStreaming(matchedPreset.schema as UINode);
+      // 스트리밍 모드 (Mock API 사용)
+      await start(apiUrl);
     } else {
       // 일반 모드 (한 번에)
       setIsStreaming(true);
