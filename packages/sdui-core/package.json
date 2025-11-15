@@ -1,0 +1,40 @@
+{
+  "name": "@sdui/core",
+  "version": "0.1.0",
+  "description": "Server-Driven UI core library with streaming support",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "server-driven-ui",
+    "sdui",
+    "streaming",
+    "react",
+    "dynamic-ui"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1"
+  },
+  "dependencies": {}
+}
