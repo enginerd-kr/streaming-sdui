@@ -131,6 +131,11 @@ export default function Home() {
               스트리밍 데모
             </Button>
           </Link>
+          <Link href="/components">
+            <Button size="lg" variant="default" className="text-lg">
+              컴포넌트 문서
+            </Button>
+          </Link>
           <Link href="/demo/container-example">
             <Button size="lg" variant="outline" className="text-lg">
               Container 예제

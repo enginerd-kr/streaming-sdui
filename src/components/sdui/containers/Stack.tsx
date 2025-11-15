@@ -101,6 +101,7 @@ export function HStack({
 /**
  * ZStack 컴포넌트
  * 자식을 겹쳐서 배치 (position: relative/absolute)
+ * 첫 번째 자식이 배경/기준이 되고, 나머지 자식들이 그 위에 겹쳐집니다.
  */
 export function ZStack({
   alignment = 'center',
@@ -119,11 +120,24 @@ export function ZStack({
     bottomRight: 'items-end justify-end',
   }[alignment];
 
+  const childArray = React.Children.toArray(children);
+
   return (
     <div className={cn('relative', className)}>
-      <div className={cn('absolute inset-0 flex', alignmentClasses)}>
-        {children}
-      </div>
+      {/* 첫 번째 자식 - 배경/기준 레이어 */}
+      {childArray[0]}
+
+      {/* 나머지 자식들 - 오버레이 레이어들 */}
+      {childArray.slice(1).map((child, index) => (
+        <div
+          key={index}
+          className={cn('absolute inset-0 flex pointer-events-none', alignmentClasses)}
+        >
+          <div className="pointer-events-auto">
+            {child}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
