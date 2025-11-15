@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { componentMetadata, getComponentsByCategory } from '@sdui/core';
-import { ArrowRight, Home } from 'lucide-react';
+import { getComponentsByCategory } from '@sdui/core';
+import { Home, ArrowRight } from 'lucide-react';
 
 export default function ComponentsPage() {
   const containerComponents = getComponentsByCategory('container');

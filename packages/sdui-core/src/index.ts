@@ -67,3 +67,9 @@ export {
   getAllComponentNames,
   searchComponents,
 } from './component-metadata';
+
+export type {
+  ComponentMetadata,
+  PropDefinition,
+  ComponentExample,
+} from './component-metadata';
