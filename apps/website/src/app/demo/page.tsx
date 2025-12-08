@@ -31,6 +31,7 @@ export default function DemoPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedPreset, setSelectedPreset] = useState<string>('dashboard');
   const [streamingProgress, setStreamingProgress] = useState(0);
+  const [renderKey, setRenderKey] = useState(0);
 
   // Action handler for interactive components
   const handleAction = async (actionType: string, payload?: Record<string, any>) => {
@@ -128,10 +129,14 @@ export default function DemoPage() {
 
           // 청크를 파서에 전달
           const parsedActions = parser.append(chunk);
+
           for (const act of parsedActions) {
-            // act는 { type: 'ui.update', uiTree, ... } 형태
-            if ('uiTree' in act && act.uiTree) {
-              setUITree(act.uiTree as UINode);
+            // StreamAction 처리
+            if ('action' in act) {
+              if (act.action === 'create' && 'component' in act) {
+                setUITree(act.component as UINode);
+                setRenderKey(prev => prev + 1);
+              }
             }
           }
         },
@@ -200,6 +205,7 @@ export default function DemoPage() {
     setUITree(null);
     setError(null);
     setStreamingProgress(0);
+    setRenderKey(0);
   };
 
   const presetPrompts = [
@@ -728,12 +734,11 @@ export default function DemoPage() {
               )}
 
               <div className="min-h-64">
-                <div className={renderMode === 'streaming' && uiTree ? 'animate-fade-in' : ''}>
-                  <StreamingUIRenderer
-                    node={uiTree}
-                    context={{ executeAction: handleAction }}
-                  />
-                </div>
+                <StreamingUIRenderer
+                  key={renderKey}
+                  node={uiTree}
+                  context={{ executeAction: handleAction }}
+                />
               </div>
 
               {isStreaming && (

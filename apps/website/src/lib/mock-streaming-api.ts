@@ -431,15 +431,47 @@ export async function* mockStreamingAPI(
   const chunkSize = options.chunkSize || Math.max(2, Math.floor(lines.length / 15));
   const delay = options.delay || 80;
 
-  // Stream chunks progressively
-  for (let i = 0; i < lines.length; i += chunkSize) {
-    const chunk = lines.slice(0, i + chunkSize).join('\n');
+  // For realistic streaming demo, we'll progressively build the component tree
+  // by adding children incrementally
+  const totalChunks = Math.ceil(lines.length / chunkSize);
 
-    // Create action object
+  // Helper function to create a partial node with limited depth
+  function createPartialNode(fullNode: any, depthLimit: number): any {
+    if (depthLimit <= 0 || !fullNode || typeof fullNode !== 'object') {
+      return fullNode;
+    }
+
+    const partial: any = {
+      id: fullNode.id,
+      type: fullNode.type,
+    };
+
+    if (fullNode.props) {
+      partial.props = fullNode.props;
+    }
+
+    if (fullNode.actions) {
+      partial.actions = fullNode.actions;
+    }
+
+    if (fullNode.children && depthLimit > 0) {
+      const childrenLimit = Math.max(1, Math.floor(fullNode.children.length * depthLimit / totalChunks));
+      partial.children = fullNode.children.slice(0, childrenLimit).map((child: any) =>
+        typeof child === 'string' ? child : createPartialNode(child, depthLimit - 1)
+      );
+    }
+
+    return partial;
+  }
+
+  for (let i = 1; i <= totalChunks; i++) {
+    // Progressively increase the depth/completeness of the tree
+    const partialNode = createPartialNode(schema, i);
+
+    // Create StreamAction
     const action = {
-      type: 'ui.update' as const,
-      format: options.format,
-      data: chunk,
+      action: 'create' as const,
+      component: partialNode
     };
 
     // Encode based on transport type
