@@ -435,9 +435,9 @@ export async function* mockStreamingAPI(
   // by adding children incrementally
   const totalChunks = Math.ceil(lines.length / chunkSize);
 
-  // Helper function to create a partial node with limited depth
-  function createPartialNode(fullNode: any, depthLimit: number): any {
-    if (depthLimit <= 0 || !fullNode || typeof fullNode !== 'object') {
+  // Helper function to create a progressively complete node
+  function createProgressiveNode(fullNode: any, iteration: number, totalIterations: number): any {
+    if (!fullNode || typeof fullNode !== 'object') {
       return fullNode;
     }
 
@@ -454,10 +454,16 @@ export async function* mockStreamingAPI(
       partial.actions = fullNode.actions;
     }
 
-    if (fullNode.children && depthLimit > 0) {
-      const childrenLimit = Math.max(1, Math.floor(fullNode.children.length * depthLimit / totalChunks));
-      partial.children = fullNode.children.slice(0, childrenLimit).map((child: any) =>
-        typeof child === 'string' ? child : createPartialNode(child, depthLimit - 1)
+    if (fullNode.children && Array.isArray(fullNode.children)) {
+      // Calculate how many children to include based on progress
+      const progress = iteration / totalIterations;
+      const totalChildren = fullNode.children.length;
+      const childrenToShow = Math.ceil(totalChildren * progress);
+
+      partial.children = fullNode.children.slice(0, childrenToShow).map((child: any) =>
+        typeof child === 'string'
+          ? child
+          : createProgressiveNode(child, iteration, totalIterations)
       );
     }
 
@@ -465,8 +471,8 @@ export async function* mockStreamingAPI(
   }
 
   for (let i = 1; i <= totalChunks; i++) {
-    // Progressively increase the depth/completeness of the tree
-    const partialNode = createPartialNode(schema, i);
+    // Progressively increase the completeness of the tree
+    const partialNode = createProgressiveNode(schema, i, totalChunks);
 
     // Create StreamAction
     const action = {

@@ -22,7 +22,7 @@ type TransportType = 'jsonl' | 'sse' | 'json';
 type RenderMode = 'streaming' | 'normal';
 
 export default function DemoPage() {
-  const [prompt, setPrompt] = useState('');
+  const [prompt, setPrompt] = useState('Create a dashboard with statistics cards');
   const [dataFormat, setDataFormat] = useState<DataFormat>('dsl');
   const [transportType, setTransportType] = useState<TransportType>('jsonl');
   const [renderMode, setRenderMode] = useState<RenderMode>('streaming');
