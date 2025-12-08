@@ -93,11 +93,13 @@ function MyComponent() {
 ### 루트 레벨
 
 ```bash
+npm run dev                # 웹사이트 개발 서버 실행 (Turbopack)
 npm run build              # 모든 패키지와 웹사이트 빌드
-npm run build:packages     # 패키지만 빌드
-npm run build:website      # 웹사이트만 빌드
-npm run dev               # 웹사이트 개발 서버 실행
-npm run clean             # 빌드 결과물 삭제
+npm run build:packages     # 패키지만 빌드 (sdui-core + sdui-react)
+npm run build:website      # 웹사이트만 빌드 (정적 익스포트)
+npm run start              # 프로덕션 빌드 실행
+npm run lint               # 모든 워크스페이스 린트 검사
+npm run clean              # 빌드 결과물 및 node_modules 삭제
 ```
 
 ## ✨ DSL vs JSON 비교
