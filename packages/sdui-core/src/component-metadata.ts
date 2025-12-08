@@ -64,13 +64,13 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '기본 화면',
         description: '기본 스크린 설정',
-        dsl: `Screen
+        dsl: `Screen#screen-1
   @backgroundColor: #f5f5f5
   @scrollable: true
   @padding: 20px
 
-  h1: Welcome
-  p: This is a screen component`,
+  h1#title: Welcome
+  p#desc: This is a screen component`,
         json: {
           id: 'screen-1',
           type: 'Screen',
@@ -133,7 +133,7 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '기본 앱바',
         description: '타이틀만 있는 간단한 앱바',
-        dsl: `AppBar
+        dsl: `AppBar#appbar-1
   @title: My App
   @position: sticky
   @elevation: 2`,
@@ -182,36 +182,36 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '간격이 있는 세로 스택',
         description: '카드를 세로로 균등한 간격으로 배치',
-        dsl: `VStack
+        dsl: `VStack#vstack-1
   @spacing: 16
   @alignment: stretch
 
-  Card
-    CardHeader
-      CardTitle: Dashboard Overview
-      CardDescription: View your key metrics
-    CardContent
-      p: Total users: 1,234
-      p: Active sessions: 89
+  Card#card-1
+    CardHeader#header-1
+      CardTitle#title-1: Dashboard Overview
+      CardDescription#desc-1: View your key metrics
+    CardContent#content-1
+      p#p-1: Total users: 1,234
+      p#p-2: Active sessions: 89
 
-  Card
-    CardHeader
-      CardTitle: Recent Activity
-      CardDescription: Latest updates from your team
-    CardContent
-      p: John posted a new update
-      p: Sarah completed the project
+  Card#card-2
+    CardHeader#header-2
+      CardTitle#title-2: Recent Activity
+      CardDescription#desc-2: Latest updates from your team
+    CardContent#content-2
+      p#p-3: John posted a new update
+      p#p-4: Sarah completed the project
 
-  Card
-    CardHeader
-      CardTitle: Quick Actions
-      CardDescription: Frequently used features
-    CardContent
-      HStack
+  Card#card-3
+    CardHeader#header-3
+      CardTitle#title-3: Quick Actions
+      CardDescription#desc-3: Frequently used features
+    CardContent#content-3
+      HStack#hstack-1
         @spacing: 8
-        Button: New Post
+        Button#btn-1: New Post
           @variant: default
-        Button: Settings
+        Button#btn-2: Settings
           @variant: outline`,
         json: {
           id: 'vstack-1',
@@ -388,13 +388,13 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '간격이 있는 가로 스택',
         description: '버튼을 가로로 배치',
-        dsl: `HStack
+        dsl: `HStack#hstack-1
   @spacing: 12
   @justify: center
 
-  Button: Cancel
+  Button#btn-1: Cancel
     @variant: outline
-  Button: Save
+  Button#btn-2: Save
     @variant: default`,
         json: {
           id: 'hstack-1',
@@ -442,21 +442,21 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '배경과 텍스트 오버레이',
         description: '색상 배경 위에 중앙 정렬된 텍스트',
-        dsl: `ZStack
+        dsl: `ZStack#zstack-1
   @alignment: center
   @className: h-64 w-full rounded-lg
 
-  div
+  div#bg-1
     @className: w-full h-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-lg
 
-  VStack
+  VStack#content-1
     @spacing: 12
     @alignment: center
     @className: text-white
 
-    h2: Overlay Content
+    h2#title-1: Overlay Content
       @className: text-4xl font-bold drop-shadow-lg
-    p: Beautiful text layered on gradient background
+    p#desc-1: Beautiful text layered on gradient background
       @className: text-lg drop-shadow-md`,
         json: {
           id: 'zstack-1',
@@ -528,44 +528,44 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '가로 스크롤 카드',
         description: '고정 너비를 가진 카드들을 가로로 스크롤',
-        dsl: `ScrollView
+        dsl: `ScrollView#scroll-1
   @direction: horizontal
   @className: w-full
 
-  HStack
+  HStack#hstack-1
     @spacing: 16
     @className: px-4
     @wrap: false
 
-    Card
+    Card#card-1
       @className: w-[500px] shrink-0
-      CardHeader
-        CardTitle: Product 1
-      CardContent: This is a horizontally scrollable card with 500px width
+      CardHeader#header-1
+        CardTitle#title-1: Product 1
+      CardContent#content-1: This is a horizontally scrollable card with 500px width
 
-    Card
+    Card#card-2
       @className: w-[500px] shrink-0
-      CardHeader
-        CardTitle: Product 2
-      CardContent: Each card has a fixed width to ensure scrolling
+      CardHeader#header-2
+        CardTitle#title-2: Product 2
+      CardContent#content-2: Each card has a fixed width to ensure scrolling
 
-    Card
+    Card#card-3
       @className: w-[500px] shrink-0
-      CardHeader
-        CardTitle: Product 3
-      CardContent: Scroll horizontally to see more cards
+      CardHeader#header-3
+        CardTitle#title-3: Product 3
+      CardContent#content-3: Scroll horizontally to see more cards
 
-    Card
+    Card#card-4
       @className: w-[500px] shrink-0
-      CardHeader
-        CardTitle: Product 4
-      CardContent: Additional content here with more space
+      CardHeader#header-4
+        CardTitle#title-4: Product 4
+      CardContent#content-4: Additional content here with more space
 
-    Card
+    Card#card-5
       @className: w-[500px] shrink-0
-      CardHeader
-        CardTitle: Product 5
-      CardContent: Even more cards to scroll through`,
+      CardHeader#header-5
+        CardTitle#title-5: Product 5
+      CardContent#content-5: Even more cards to scroll through`,
         json: {
           id: 'scroll-1',
           type: 'ScrollView',
@@ -746,46 +746,46 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '반응형 그리드',
         description: '모바일 1열, 태블릿 2열, 데스크톱 3열',
-        dsl: `Grid
+        dsl: `Grid#grid-1
   @columns: 1
   @gap: 16
   @responsive: {"md": {"columns": 2}, "lg": {"columns": 3}}
 
-  Card
-    CardHeader
-      CardTitle: Feature 1
-      CardDescription: First grid item
-    CardContent: This card adapts to screen size
+  Card#card-1
+    CardHeader#header-1
+      CardTitle#title-1: Feature 1
+      CardDescription#desc-1: First grid item
+    CardContent#content-1: This card adapts to screen size
 
-  Card
-    CardHeader
-      CardTitle: Feature 2
-      CardDescription: Second grid item
-    CardContent: Grid automatically adjusts columns
+  Card#card-2
+    CardHeader#header-2
+      CardTitle#title-2: Feature 2
+      CardDescription#desc-2: Second grid item
+    CardContent#content-2: Grid automatically adjusts columns
 
-  Card
-    CardHeader
-      CardTitle: Feature 3
-      CardDescription: Third grid item
-    CardContent: Responsive layout made easy
+  Card#card-3
+    CardHeader#header-3
+      CardTitle#title-3: Feature 3
+      CardDescription#desc-3: Third grid item
+    CardContent#content-3: Responsive layout made easy
 
-  Card
-    CardHeader
-      CardTitle: Feature 4
-      CardDescription: Fourth grid item
-    CardContent: 1 column on mobile, 2 on tablet
+  Card#card-4
+    CardHeader#header-4
+      CardTitle#title-4: Feature 4
+      CardDescription#desc-4: Fourth grid item
+    CardContent#content-4: 1 column on mobile, 2 on tablet
 
-  Card
-    CardHeader
-      CardTitle: Feature 5
-      CardDescription: Fifth grid item
-    CardContent: 3 columns on desktop
+  Card#card-5
+    CardHeader#header-5
+      CardTitle#title-5: Feature 5
+      CardDescription#desc-5: Fifth grid item
+    CardContent#content-5: 3 columns on desktop
 
-  Card
-    CardHeader
-      CardTitle: Feature 6
-      CardDescription: Sixth grid item
-    CardContent: Perfect for feature showcases`,
+  Card#card-6
+    CardHeader#header-6
+      CardTitle#title-6: Feature 6
+      CardDescription#desc-6: Sixth grid item
+    CardContent#content-6: Perfect for feature showcases`,
         json: {
           id: 'grid-1',
           type: 'Grid',
@@ -993,12 +993,12 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '중앙 정렬 컨테이너',
         description: '최대 너비를 제한하고 중앙 정렬',
-        dsl: `Container
+        dsl: `Container#container-1
   @maxWidth: md
   @padding: 24px
 
-  h1: Centered Content
-  p: This content is centered and has a max width`,
+  h1#title-1: Centered Content
+  p#desc-1: This content is centered and has a max width`,
         json: {
           id: 'container-1',
           type: 'Container',
@@ -1039,12 +1039,12 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '상하단 SafeArea',
         description: '상단과 하단에 SafeArea 적용',
-        dsl: `SafeArea
+        dsl: `SafeArea#safearea-1
   @edges: ["top", "bottom"]
 
-  VStack
-    h1: Safe Content
-    p: This content respects safe areas`,
+  VStack#stack-1
+    h1#title-1: Safe Content
+    p#desc-1: This content respects safe areas`,
         json: {
           id: 'safearea-1',
           type: 'SafeArea',
@@ -1099,14 +1099,14 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '다양한 버튼 스타일',
         description: '여러 variant를 가진 버튼들',
-        dsl: `HStack
+        dsl: `HStack#buttons-1
   @spacing: 8
 
-  Button: Default
+  Button#btn-1: Default
     @variant: default
-  Button: Outline
+  Button#btn-2: Outline
     @variant: outline
-  Button: Ghost
+  Button#btn-3: Ghost
     @variant: ghost`,
         json: {
           id: 'buttons-1',
@@ -1166,12 +1166,12 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '폼 입력',
         description: '라벨과 함께 사용하는 인풋',
-        dsl: `VStack
+        dsl: `VStack#form-1
   @spacing: 8
 
-  Label: Email
+  Label#label-1: Email
     @htmlFor: email
-  Input
+  Input#input-1
     @id: email
     @type: email
     @placeholder: Enter your email`,
@@ -1220,7 +1220,7 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '라벨과 인풋',
         description: 'htmlFor로 연결된 라벨',
-        dsl: `Label: Username
+        dsl: `Label#label-1: Username
   @htmlFor: username`,
         json: {
           id: 'label-1',
@@ -1249,14 +1249,14 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '완전한 카드',
         description: 'Header, Content, Footer가 있는 카드',
-        dsl: `Card
-  CardHeader
-    CardTitle: Card Title
-    CardDescription: Card description here
-  CardContent
-    p: This is the main content
-  CardFooter
-    Button: Action`,
+        dsl: `Card#card-1
+  CardHeader#header-1
+    CardTitle#title-1: Card Title
+    CardDescription#desc-1: Card description here
+  CardContent#content-1
+    p#p-1: This is the main content
+  CardFooter#footer-1
+    Button#btn-1: Action`,
         json: {
           id: 'card-1',
           type: 'Card',
@@ -1321,22 +1321,22 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '기본 탭',
         description: '3개의 탭이 있는 예제',
-        dsl: `Tabs
+        dsl: `Tabs#tabs-1
   @defaultValue: tab1
 
-  TabsList
-    TabsTrigger: Tab 1
+  TabsList#list-1
+    TabsTrigger#trigger-1: Tab 1
       @value: tab1
-    TabsTrigger: Tab 2
+    TabsTrigger#trigger-2: Tab 2
       @value: tab2
 
-  TabsContent
+  TabsContent#content-1
     @value: tab1
-    p: Content for Tab 1
+    p#p-1: Content for Tab 1
 
-  TabsContent
+  TabsContent#content-2
     @value: tab2
-    p: Content for Tab 2`,
+    p#p-2: Content for Tab 2`,
         json: {
           id: 'tabs-1',
           type: 'Tabs',
@@ -1415,14 +1415,14 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '로딩 스켈레톤',
         description: '카드 로딩 상태',
-        dsl: `VStack
+        dsl: `VStack#skeleton-1
   @spacing: 16
 
-  Skeleton
+  Skeleton#sk-1
     @className: h-12 w-12 rounded-full
-  Skeleton
+  Skeleton#sk-2
     @className: h-4 w-full
-  Skeleton
+  Skeleton#sk-3
     @className: h-4 w-3/4`,
         json: {
           id: 'skeleton-1',
@@ -1476,9 +1476,9 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '기본 div',
         description: 'className과 함께 사용',
-        dsl: `div
+        dsl: `div#div-1
   @className: p-4 border rounded
-  p: Content inside div`,
+  p#p-1: Content inside div`,
         json: {
           id: 'div-1',
           type: 'div',
@@ -1512,7 +1512,7 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '메인 헤딩',
         description: '페이지 제목',
-        dsl: `h1: Welcome to Our Site
+        dsl: `h1#h1-1: Welcome to Our Site
   @className: text-4xl font-bold`,
         json: {
           id: 'h1-1',
@@ -1541,7 +1541,7 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '단락',
         description: '기본 텍스트 단락',
-        dsl: `p: This is a paragraph of text
+        dsl: `p#p-1: This is a paragraph of text
   @className: text-gray-600`,
         json: {
           id: 'p-1',
@@ -1576,7 +1576,7 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '외부 링크',
         description: '새 탭으로 여는 링크',
-        dsl: `a: Visit Google
+        dsl: `a#a-1: Visit Google
   @href: https://google.com
   @target: _blank
   @className: text-blue-600 hover:underline`,
@@ -1615,7 +1615,7 @@ export const componentMetadata: Record<string, ComponentMetadata> = {
       {
         title: '이미지',
         description: '기본 이미지',
-        dsl: `img
+        dsl: `img#img-1
   @src: /image.jpg
   @alt: Description
   @className: w-full rounded-lg`,
