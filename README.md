@@ -1,4 +1,4 @@
-# Server-Driven UI (SDUI) Monorepo
+# Server-Driven UI (SDUI)
 
 **스트리밍 기반 서버드리븐 UI로 80% 토큰 절감**
 
