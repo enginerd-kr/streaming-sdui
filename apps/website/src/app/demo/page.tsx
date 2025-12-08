@@ -30,6 +30,7 @@ export default function DemoPage() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedPreset, setSelectedPreset] = useState<string>('dashboard');
+  const [streamingProgress, setStreamingProgress] = useState(0);
 
   // Action handler for interactive components
   const handleAction = async (actionType: string, payload?: Record<string, any>) => {
@@ -108,16 +109,23 @@ export default function DemoPage() {
     setIsStreaming(true);
     setError(null);
     setUITree(null);
+    setStreamingProgress(0);
 
     // 파서 초기화
     const parser = createParser(transportType as ParserFormat);
     parser.reset();
+
+    let chunkCount = 0;
+    const estimatedTotalChunks = 15; // Approximate number of chunks
 
     try {
       // Mock API 호출
       await mockFetch(
         url,
         (chunk) => {
+          chunkCount++;
+          setStreamingProgress(Math.min((chunkCount / estimatedTotalChunks) * 100, 95));
+
           // 청크를 파서에 전달
           const parsedActions = parser.append(chunk);
           for (const act of parsedActions) {
@@ -134,22 +142,31 @@ export default function DemoPage() {
           delay: 80,
         }
       );
+      setStreamingProgress(100);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
-      setIsStreaming(false);
+      setTimeout(() => {
+        setIsStreaming(false);
+        setStreamingProgress(0);
+      }, 300);
     }
   };
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
 
-    // 프리셋 찾기 (프롬프트와 매칭)
-    const matchedPreset = presetPrompts.find(p =>
-      prompt.toLowerCase().includes(p.id) ||
-      prompt.toLowerCase().includes(p.label.toLowerCase()) ||
-      p.value.toLowerCase().includes(prompt.toLowerCase().split(' ').slice(0, 2).join(' '))
-    ) || presetPrompts.find(p => p.id === selectedPreset);
+    // 프리셋 찾기 - selectedPreset을 우선 사용
+    let matchedPreset = presetPrompts.find(p => p.id === selectedPreset);
+
+    // selectedPreset이 없으면 프롬프트 텍스트로 매칭
+    if (!matchedPreset) {
+      matchedPreset = presetPrompts.find(p =>
+        prompt.toLowerCase().includes(p.id) ||
+        prompt.toLowerCase().includes(p.label.toLowerCase()) ||
+        p.value.toLowerCase().includes(prompt.toLowerCase().split(' ').slice(0, 2).join(' '))
+      );
+    }
 
     if (!matchedPreset) {
       setError('No matching preset found. Please use one of the preset buttons.');
@@ -166,6 +183,7 @@ export default function DemoPage() {
       // 일반 모드 (한 번에)
       setIsStreaming(true);
       setError(null);
+      setUITree(null); // Reset first
 
       try {
         await new Promise(resolve => setTimeout(resolve, 300));
@@ -181,6 +199,7 @@ export default function DemoPage() {
   const handleReset = () => {
     setUITree(null);
     setError(null);
+    setStreamingProgress(0);
   };
 
   const presetPrompts = [
@@ -290,7 +309,7 @@ export default function DemoPage() {
       schema: {
         id: 'product-grid',
         type: 'div',
-        props: { className: 'grid grid-cols-3 gap-4' },
+        props: { className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4' },
         children: [
           {
             id: 'product-card-1',
@@ -307,10 +326,10 @@ export default function DemoPage() {
               {
                 id: 'product-footer-1',
                 type: 'CardFooter',
-                props: { className: 'flex justify-between items-center' },
+                props: { className: 'flex flex-col gap-3' },
                 children: [
                   { id: 'product-price-1', type: 'span', props: { className: 'text-2xl font-bold' }, children: ['$99'] },
-                  { id: 'product-btn-1', type: 'Button', children: ['Add to Cart'] },
+                  { id: 'product-btn-1', type: 'Button', props: { className: 'w-full' }, children: ['Add to Cart'] },
                 ],
               },
             ],
@@ -330,10 +349,10 @@ export default function DemoPage() {
               {
                 id: 'product-footer-2',
                 type: 'CardFooter',
-                props: { className: 'flex justify-between items-center' },
+                props: { className: 'flex flex-col gap-3' },
                 children: [
                   { id: 'product-price-2', type: 'span', props: { className: 'text-2xl font-bold' }, children: ['$149'] },
-                  { id: 'product-btn-2', type: 'Button', children: ['Add to Cart'] },
+                  { id: 'product-btn-2', type: 'Button', props: { className: 'w-full' }, children: ['Add to Cart'] },
                 ],
               },
             ],
@@ -353,10 +372,10 @@ export default function DemoPage() {
               {
                 id: 'product-footer-3',
                 type: 'CardFooter',
-                props: { className: 'flex justify-between items-center' },
+                props: { className: 'flex flex-col gap-3' },
                 children: [
                   { id: 'product-price-3', type: 'span', props: { className: 'text-2xl font-bold' }, children: ['$199'] },
-                  { id: 'product-btn-3', type: 'Button', children: ['Add to Cart'] },
+                  { id: 'product-btn-3', type: 'Button', props: { className: 'w-full' }, children: ['Add to Cart'] },
                 ],
               },
             ],
@@ -709,16 +728,32 @@ export default function DemoPage() {
               )}
 
               <div className="min-h-64">
-                <StreamingUIRenderer
-                  node={uiTree}
-                  context={{ executeAction: handleAction }}
-                />
+                <div className={renderMode === 'streaming' && uiTree ? 'animate-fade-in' : ''}>
+                  <StreamingUIRenderer
+                    node={uiTree}
+                    context={{ executeAction: handleAction }}
+                  />
+                </div>
               </div>
 
               {isStreaming && (
-                <div className="mt-4 flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                  <div className="animate-pulse">●</div>
-                  <span>Streaming...</span>
+                <div className="mt-4 space-y-2">
+                  {/* Progress bar */}
+                  <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                    <div
+                      className="bg-primary h-full transition-all duration-300 ease-out"
+                      style={{ width: `${streamingProgress}%` }}
+                    />
+                  </div>
+                  {/* Status text */}
+                  <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                    <div className="animate-pulse">●</div>
+                    <span>
+                      {renderMode === 'streaming'
+                        ? `Streaming UI... ${Math.round(streamingProgress)}%`
+                        : 'Generating UI...'}
+                    </span>
+                  </div>
                 </div>
               )}
             </CardContent>

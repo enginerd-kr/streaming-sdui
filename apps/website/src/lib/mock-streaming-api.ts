@@ -122,7 +122,7 @@ export const mockAPIRoutes: MockAPIRoute[] = [
     handler: () => ({
       id: 'product-grid',
       type: 'div',
-      props: { className: 'grid grid-cols-3 gap-4' },
+      props: { className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4' },
       children: [
         {
           id: 'product-card-1',
@@ -139,10 +139,10 @@ export const mockAPIRoutes: MockAPIRoute[] = [
             {
               id: 'product-footer-1',
               type: 'CardFooter',
-              props: { className: 'flex justify-between items-center' },
+              props: { className: 'flex flex-col gap-3' },
               children: [
                 { id: 'product-price-1', type: 'span', props: { className: 'text-2xl font-bold' }, children: ['$99'] },
-                { id: 'product-btn-1', type: 'Button', children: ['Add to Cart'] },
+                { id: 'product-btn-1', type: 'Button', props: { className: 'w-full' }, children: ['Add to Cart'] },
               ],
             },
           ],
@@ -162,10 +162,10 @@ export const mockAPIRoutes: MockAPIRoute[] = [
             {
               id: 'product-footer-2',
               type: 'CardFooter',
-              props: { className: 'flex justify-between items-center' },
+              props: { className: 'flex flex-col gap-3' },
               children: [
                 { id: 'product-price-2', type: 'span', props: { className: 'text-2xl font-bold' }, children: ['$149'] },
-                { id: 'product-btn-2', type: 'Button', children: ['Add to Cart'] },
+                { id: 'product-btn-2', type: 'Button', props: { className: 'w-full' }, children: ['Add to Cart'] },
               ],
             },
           ],
@@ -185,10 +185,10 @@ export const mockAPIRoutes: MockAPIRoute[] = [
             {
               id: 'product-footer-3',
               type: 'CardFooter',
-              props: { className: 'flex justify-between items-center' },
+              props: { className: 'flex flex-col gap-3' },
               children: [
                 { id: 'product-price-3', type: 'span', props: { className: 'text-2xl font-bold' }, children: ['$199'] },
-                { id: 'product-btn-3', type: 'Button', children: ['Add to Cart'] },
+                { id: 'product-btn-3', type: 'Button', props: { className: 'w-full' }, children: ['Add to Cart'] },
               ],
             },
           ],
