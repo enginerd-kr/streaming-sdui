@@ -19,9 +19,19 @@ export default function ComponentDetailClient({ params }: { params: Promise<{ na
 
   useEffect(() => {
     params.then(p => {
-      const componentName = p.name.charAt(0).toUpperCase() + p.name.slice(1);
-      setName(componentName);
-      setMetadata(componentMetadata[componentName] || null);
+      // Find the component name by case-insensitive match
+      const urlParam = p.name.toLowerCase();
+      const componentName = Object.keys(componentMetadata).find(
+        key => key.toLowerCase() === urlParam
+      );
+
+      if (componentName) {
+        setName(componentName);
+        setMetadata(componentMetadata[componentName]);
+      } else {
+        setName(p.name);
+        setMetadata(null);
+      }
     });
   }, [params]);
 
