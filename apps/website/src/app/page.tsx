@@ -11,7 +11,7 @@ export default function Home() {
             Server-Driven UI
           </h1>
           <p className="text-xl text-muted-foreground">
-            shadcn/ui 컴포넌트를 활용한 스트리밍 서버드리븐 UI 라이브러리
+            스트리밍 기반 서버드리븐 UI를 80% 토큰 절감으로
           </p>
         </div>
 
@@ -76,50 +76,68 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card className="md:col-span-2 border shadow-none">
+          <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>🆕 DSL</CardTitle>
+              <CardTitle>✨ 커스텀 DSL vs JSON - 토큰 사용량 비교</CardTitle>
               <CardDescription>
-                80% 토큰 절감! LLM 친화적인 간결한 문법
+                동일한 UI를 표현하는데 80% 적은 토큰으로 비용과 속도를 절감
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                간결한 문법으로 UI를 정의합니다.
-                LLM이 훨씬 적은 토큰으로 UI를 생성할 수 있어 비용과 속도 면에서 유리합니다.
-              </p>
-              <div className="bg-muted p-3 rounded-md text-sm font-mono">
-                <div className="text-blue-600">Card</div>
-                <div className="ml-4 text-purple-600">@className: w-full</div>
-                <div className="ml-4 text-blue-600">CardHeader</div>
-                <div className="ml-8 text-blue-600">CardTitle: Hello World</div>
-                <div className="ml-4 text-blue-600">CardContent</div>
-                <div className="ml-8 text-muted-foreground">&quot;Card content here&quot;</div>
-              </div>
-            </CardContent>
-          </Card>
+              <div className="grid md:grid-cols-2 gap-4">
+                {/* DSL */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-semibold text-green-600">DSL 형식 ✓</h3>
+                    <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">~50 토큰</span>
+                  </div>
+                  <div className="bg-muted p-3 rounded-md text-xs font-mono leading-relaxed">
+                    <div className="text-blue-600">Card#card-1</div>
+                    <div className="ml-3 text-purple-600">@className: w-full</div>
+                    <div className="ml-3 text-blue-600">CardHeader#header-1</div>
+                    <div className="ml-6 text-blue-600">CardTitle#title-1: Dashboard</div>
+                    <div className="ml-6 text-blue-600">CardDescription#desc-1:</div>
+                    <div className="ml-9 text-muted-foreground">&quot;View metrics&quot;</div>
+                    <div className="ml-3 text-blue-600">CardContent#content-1</div>
+                    <div className="ml-6 text-muted-foreground">&quot;Total: 1,234&quot;</div>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    • 간결한 문법<br/>
+                    • LLM이 이해하기 쉬움<br/>
+                    • 토큰 80% 절감
+                  </p>
+                </div>
 
-          <Card className="md:col-span-2 border shadow-none">
-            <CardHeader>
-              <CardTitle>📦 JSON 포맷</CardTitle>
-              <CardDescription>
-                검증된 표준 데이터 형식
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                전통적인 JSON 형식도 완벽하게 지원합니다.
-                표준 도구와의 호환성이 뛰어나며, 디버깅과 검증이 용이합니다.
-              </p>
-              <div className="bg-muted p-3 rounded-md text-sm font-mono">
-                <div className="text-purple-600">{`{`}</div>
-                <div className="ml-4 text-green-600">&quot;type&quot;: &quot;Card&quot;,</div>
-                <div className="ml-4 text-green-600">&quot;props&quot;: {`{`} &quot;className&quot;: &quot;w-full&quot; {`}`},</div>
-                <div className="ml-4 text-green-600">&quot;children&quot;: [</div>
-                <div className="ml-8 text-blue-600">{`{ "type": "CardHeader", ... }`},</div>
-                <div className="ml-8 text-blue-600">{`{ "type": "CardContent", ... }`}</div>
-                <div className="ml-4 text-green-600">]</div>
-                <div className="text-purple-600">{`}`}</div>
+                {/* JSON */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-semibold text-orange-600">JSON 형식</h3>
+                    <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">~250 토큰</span>
+                  </div>
+                  <div className="bg-muted p-3 rounded-md text-xs font-mono leading-relaxed">
+                    <div className="text-purple-600">{`{`}</div>
+                    <div className="ml-3 text-green-600">&quot;id&quot;: &quot;card-1&quot;,</div>
+                    <div className="ml-3 text-green-600">&quot;type&quot;: &quot;Card&quot;,</div>
+                    <div className="ml-3 text-green-600">&quot;props&quot;: {`{`}</div>
+                    <div className="ml-6 text-green-600">&quot;className&quot;: &quot;w-full&quot;</div>
+                    <div className="ml-3 text-green-600">{`}`},</div>
+                    <div className="ml-3 text-green-600">&quot;children&quot;: [</div>
+                    <div className="ml-6 text-blue-600">{`{ "id": "header-1", ... }`},</div>
+                    <div className="ml-6 text-blue-600">{`{ "id": "content-1", ... }`}</div>
+                    <div className="ml-3 text-green-600">]</div>
+                    <div className="text-purple-600">{`}`}</div>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    • 표준 형식<br/>
+                    • 도구 호환성 우수<br/>
+                    • 디버깅 용이
+                  </p>
+                </div>
+              </div>
+              <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-md">
+                <p className="text-sm text-blue-900 dark:text-blue-100">
+                  💡 <strong>두 형식 모두 지원:</strong> DSL로 비용 절감 + JSON으로 표준 호환성 확보
+                </p>
               </div>
             </CardContent>
           </Card>
