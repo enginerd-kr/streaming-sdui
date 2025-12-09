@@ -88,6 +88,68 @@ function MyComponent() {
 }
 ```
 
+### 🎨 커스텀 컴포넌트 사용하기
+
+자신만의 디자인 시스템 컴포넌트를 SDUI와 함께 사용할 수 있습니다!
+DSL과 스트리밍은 그대로 사용하면서, Material-UI, Ant Design 등 원하는 컴포넌트만 등록하세요.
+
+#### 방법 1: 기본 컴포넌트에 추가 (`extendRegistry`)
+
+기존의 모든 컴포넌트를 유지하면서 커스텀 컴포넌트를 추가합니다.
+
+```typescript
+import { extendRegistry, StreamingUIRenderer } from '@sdui/react';
+import { MyButton, MyCard } from './my-design-system';
+
+const customRegistry = extendRegistry({
+  MyButton,
+  MyCard,
+});
+
+function App() {
+  return (
+    <StreamingUIRenderer
+      node={uiNode}
+      context={{ registry: customRegistry }}
+    />
+  );
+}
+```
+
+#### 방법 2: 완전 커스텀 레지스트리 (`createComponentRegistry`)
+
+기본 컴포넌트 없이 오직 지정한 컴포넌트만 사용합니다.
+
+```typescript
+import { createComponentRegistry } from '@sdui/react';
+import * as MyDesignSystem from './my-design-system';
+
+const customRegistry = createComponentRegistry({
+  Button: MyDesignSystem.Button,
+  Card: MyDesignSystem.Card,
+  Input: MyDesignSystem.Input,
+  // 필요한 컴포넌트만 추가
+});
+
+<StreamingUIRenderer
+  node={uiNode}
+  context={{ registry: customRegistry }}
+/>
+```
+
+**Tip**: 선택적으로 조합하고 싶다면 직접 spread operator를 사용하세요:
+
+```typescript
+import { containerRegistry, htmlRegistry } from '@sdui/react';
+
+const customRegistry = {
+  ...containerRegistry,  // Container 컴포넌트만 포함
+  ...htmlRegistry,       // HTML 요소 포함
+  MyButton,              // 커스텀 컴포넌트
+  MyCard,
+};
+```
+
 ## 📝 NPM Scripts
 
 ### 루트 레벨

@@ -80,6 +80,23 @@ export function getComponent(
   return registry[type];
 }
 
+/**
+ * Extends the default registry with custom components
+ * Use this to add your own design system components while keeping all built-in components
+ *
+ * @example
+ * ```tsx
+ * import { extendRegistry } from '@sdui/react';
+ * import { MyButton, MyCard } from './my-design-system';
+ *
+ * const myRegistry = extendRegistry({
+ *   MyButton,
+ *   MyCard,
+ * });
+ *
+ * <StreamingUIRenderer node={node} context={{ registry: myRegistry }} />
+ * ```
+ */
 export function extendRegistry(
   customComponents: ComponentRegistry
 ): ComponentRegistry {
@@ -87,4 +104,29 @@ export function extendRegistry(
     ...defaultRegistry,
     ...customComponents,
   };
+}
+
+/**
+ * Creates a completely new registry with only the components you provide
+ * Use this when you want full control and don't need the built-in components
+ *
+ * @example
+ * ```tsx
+ * import { createComponentRegistry } from '@sdui/react';
+ * import * as MyDesignSystem from './my-design-system';
+ *
+ * const myRegistry = createComponentRegistry({
+ *   Button: MyDesignSystem.Button,
+ *   Card: MyDesignSystem.Card,
+ *   Input: MyDesignSystem.Input,
+ *   // Add only the components you need
+ * });
+ *
+ * <StreamingUIRenderer node={node} context={{ registry: myRegistry }} />
+ * ```
+ */
+export function createComponentRegistry(
+  components: ComponentRegistry
+): ComponentRegistry {
+  return { ...components };
 }

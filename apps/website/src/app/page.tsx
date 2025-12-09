@@ -33,15 +33,15 @@ export default function Home() {
 
           <Card>
             <CardHeader>
-              <CardTitle>🎨 shadcn/ui 통합</CardTitle>
+              <CardTitle>🎨 커스텀 컴포넌트</CardTitle>
               <CardDescription>
-                아름다운 컴포넌트를 동적으로 렌더링
+                자신만의 디자인 시스템 사용 가능
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Button, Card, Input 등 shadcn/ui의 모든 컴포넌트를
-                서버에서 동적으로 조합할 수 있습니다.
+                Material-UI, Ant Design 등 원하는 디자인 시스템을
+                자유롭게 등록하고 DSL/스트리밍과 함께 사용하세요.
               </p>
             </CardContent>
           </Card>
@@ -138,6 +138,64 @@ export default function Home() {
                 <p className="text-xs md:text-sm text-blue-900 dark:text-blue-100">
                   💡 <strong>두 형식 모두 지원:</strong> DSL로 비용 절감 + JSON으로 표준 호환성 확보
                 </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="md:col-span-2">
+            <CardHeader>
+              <CardTitle>🎨 커스텀 컴포넌트 등록</CardTitle>
+              <CardDescription>
+                자신만의 디자인 시스템을 SDUI와 함께 사용하세요
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  DSL과 스트리밍은 그대로 사용하면서, Material-UI, Ant Design 등 원하는 컴포넌트만 등록할 수 있습니다.
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                  <div className="space-y-3">
+                    <h3 className="text-base font-semibold text-blue-600">방법 1: extendRegistry</h3>
+                    <div className="bg-muted p-3 md:p-4 rounded-md text-sm font-mono leading-relaxed overflow-x-auto">
+                      <div className="text-purple-600">extendRegistry({`{`}</div>
+                      <div className="ml-4 text-green-600">MyButton,</div>
+                      <div className="ml-4 text-green-600">MyCard,</div>
+                      <div className="text-purple-600">{`})`}</div>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      기본 컴포넌트에 커스텀 컴포넌트 추가
+                    </p>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h3 className="text-base font-semibold text-purple-600">방법 2: createComponentRegistry</h3>
+                    <div className="bg-muted p-3 md:p-4 rounded-md text-sm font-mono leading-relaxed overflow-x-auto">
+                      <div className="text-purple-600">createComponentRegistry({`{`}</div>
+                      <div className="ml-4 text-green-600">Button: MyBtn,</div>
+                      <div className="ml-4 text-green-600">Card: MyCard,</div>
+                      <div className="text-purple-600">{`})`}</div>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      완전히 새로운 레지스트리 생성
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-muted p-3 md:p-4 rounded-md">
+                  <pre className="text-xs md:text-sm overflow-x-auto">
+                    <code className="block text-muted-foreground">{`import { extendRegistry } from '@sdui/react';
+import { Button, Card } from './my-design-system';
+
+const registry = extendRegistry({ Button, Card });
+
+<StreamingUIRenderer
+  node={uiTree}
+  context={{ registry }}
+/>`}</code>
+                  </pre>
+                </div>
               </div>
             </CardContent>
           </Card>
