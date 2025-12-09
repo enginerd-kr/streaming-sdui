@@ -32,21 +32,21 @@ export function AppBar({
         className
       )}
     >
-      <div className="flex items-center justify-between h-12 md:h-16 px-3 md:px-6">
+      <div className="flex items-center justify-between h-14 px-4">
         {/* Leading (왼쪽) */}
-        {leading && <div className="flex items-center shrink-0">{leading}</div>}
+        {leading && <div className="flex items-center">{leading}</div>}
 
         {/* Title (중앙) */}
-        <div className="flex-1 flex items-center justify-center px-2 md:px-4 min-w-0">
+        <div className="flex-1 flex items-center justify-center px-4">
           {typeof title === 'string' ? (
-            <h1 className="text-sm md:text-lg font-semibold truncate">{title}</h1>
+            <h1 className="text-lg font-semibold truncate">{title}</h1>
           ) : (
             title
           )}
         </div>
 
         {/* Actions (오른쪽) */}
-        {actions && <div className="flex items-center gap-1 md:gap-2 shrink-0">{actions}</div>}
+        {actions && <div className="flex items-center gap-2">{actions}</div>}
       </div>
 
       {/* 추가 커스텀 컨텐츠 */}
