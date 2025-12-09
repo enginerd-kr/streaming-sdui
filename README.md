@@ -137,18 +137,24 @@ const customRegistry = createComponentRegistry({
 />
 ```
 
-**Tip**: 선택적으로 조합하고 싶다면 직접 spread operator를 사용하세요:
+**Tip**: `createComponentRegistry`에서도 spread operator로 컴포넌트 문서의 레지스트리를 추가할 수 있습니다:
 
 ```typescript
-import { containerRegistry, htmlRegistry } from '@sdui/react';
+import {
+  createComponentRegistry,
+  containerComponents,  // Container 컴포넌트 (Screen, AppBar, VStack 등)
+  htmlComponents        // HTML 요소 (div, span, p 등)
+} from '@sdui/react';
 
-const customRegistry = {
-  ...containerRegistry,  // Container 컴포넌트만 포함
-  ...htmlRegistry,       // HTML 요소 포함
-  MyButton,              // 커스텀 컴포넌트
-  MyCard,
-};
+const customRegistry = createComponentRegistry({
+  ...containerComponents,  // Container 컴포넌트 전체 추가
+  ...htmlComponents,       // HTML 요소 전체 추가
+  Button: MyDesignSystem.Button,  // 커스텀 컴포넌트
+  Card: MyDesignSystem.Card,
+});
 ```
+
+이렇게 하면 컴포넌트 문서에 있는 Container, HTML 컴포넌트들을 손쉽게 포함하면서도 필요한 커스텀 컴포넌트를 추가할 수 있습니다.
 
 ## 📝 NPM Scripts
 

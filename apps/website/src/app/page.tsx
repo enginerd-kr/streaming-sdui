@@ -183,9 +183,10 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="bg-muted p-3 md:p-4 rounded-md">
-                  <pre className="text-xs md:text-sm overflow-x-auto">
-                    <code className="block text-muted-foreground">{`import { extendRegistry } from '@sdui/react';
+                <div className="space-y-3">
+                  <div className="bg-muted p-3 md:p-4 rounded-md">
+                    <pre className="text-xs md:text-sm overflow-x-auto">
+                      <code className="block text-muted-foreground">{`import { extendRegistry } from '@sdui/react';
 import { Button, Card } from './my-design-system';
 
 const registry = extendRegistry({ Button, Card });
@@ -194,7 +195,29 @@ const registry = extendRegistry({ Button, Card });
   node={uiTree}
   context={{ registry }}
 />`}</code>
-                  </pre>
+                    </pre>
+                  </div>
+
+                  <div className="bg-muted p-3 md:p-4 rounded-md">
+                    <pre className="text-xs md:text-sm overflow-x-auto">
+                      <code className="block text-muted-foreground">{`import {
+  createComponentRegistry,
+  containerComponents,  // Screen, AppBar, VStack 등
+  htmlComponents        // div, span, p 등
+} from '@sdui/react';
+
+const registry = createComponentRegistry({
+  ...containerComponents,  // Container 컴포넌트 전체
+  ...htmlComponents,       // HTML 요소 전체
+  Button: MyButton,        // 커스텀 컴포넌트
+});
+
+<StreamingUIRenderer
+  node={uiTree}
+  context={{ registry }}
+/>`}</code>
+                    </pre>
+                  </div>
                 </div>
               </div>
             </CardContent>
