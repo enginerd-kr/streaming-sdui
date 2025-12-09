@@ -511,29 +511,29 @@ export default function DemoPage() {
   ];
 
   return (
-    <div className="container mx-auto p-6 max-w-7xl">
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-4xl font-bold">Server-Driven UI Demo</h1>
-          <div className="flex gap-2">
+    <div className="container mx-auto p-4 md:p-6 max-w-7xl">
+      <div className="mb-6 md:mb-8">
+        <div className="flex flex-col gap-4 mb-4 md:flex-row md:items-center md:justify-between">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">Server-Driven UI Demo</h1>
+          <div className="flex flex-wrap gap-2">
             <Link href="/">
-              <Button variant="outline">
+              <Button variant="outline" size="sm">
                 ← Home
               </Button>
             </Link>
             <Link href="/demo/container-example">
-              <Button variant="outline">
+              <Button variant="outline" size="sm">
                 Container Examples
               </Button>
             </Link>
           </div>
         </div>
-        <p className="text-muted-foreground">
+        <p className="text-sm md:text-base text-muted-foreground">
           Dynamic UI rendering with streaming support (GitHub Pages compatible demo)
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {/* 입력 영역 */}
         <div className="space-y-4">
           <Card>
@@ -769,10 +769,10 @@ export default function DemoPage() {
       {/* 예제 코드 */}
       <div className="mt-8">
         <Tabs defaultValue="usage">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="usage">Usage</TabsTrigger>
-            <TabsTrigger value="schema">Schema</TabsTrigger>
-            <TabsTrigger value="features">Features</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 h-auto">
+            <TabsTrigger value="usage" className="text-xs md:text-sm">Usage</TabsTrigger>
+            <TabsTrigger value="schema" className="text-xs md:text-sm">Schema</TabsTrigger>
+            <TabsTrigger value="features" className="text-xs md:text-sm">Features</TabsTrigger>
           </TabsList>
 
           <TabsContent value="usage" className="space-y-4">
@@ -781,7 +781,7 @@ export default function DemoPage() {
                 <CardTitle>Basic Usage</CardTitle>
               </CardHeader>
               <CardContent>
-                <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
+                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm">
                   <code>{`import { useStreamingUI } from '@sdui/core';
 import { StreamingUIRenderer } from '@sdui/react';
 
@@ -816,7 +816,7 @@ function MyComponent() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
+                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-h-96 overflow-y-auto">
                   <code>
                     {dataFormat === 'dsl'
                       ? convertToDSL(presetPrompts.find(p => p.id === selectedPreset)?.schema as UINode)

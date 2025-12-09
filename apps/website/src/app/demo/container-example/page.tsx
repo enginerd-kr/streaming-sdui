@@ -310,28 +310,28 @@ export default function ContainerExamplePage() {
         title="Container Components Demo"
         leading={
           <Link href="/">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" className="text-xs md:text-sm">
               ← Home
             </Button>
           </Link>
         }
         actions={
-          <>
+          <div className="flex gap-1 md:gap-2">
             <Link href="/demo">
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="text-xs md:text-sm px-2 md:px-3">
                 Demo
               </Button>
             </Link>
-            <Button variant="default" size="sm">Login</Button>
-          </>
+            <Button variant="default" size="sm" className="text-xs md:text-sm px-2 md:px-3">Login</Button>
+          </div>
         }
         position="sticky"
         elevation={1}
       />
 
       {/* Main Content */}
-      <Container maxWidth="xl" padding={6}>
-        <VStack spacing={8}>
+      <Container maxWidth="xl" padding={4} className="md:p-6">
+        <VStack spacing={6} className="md:space-y-8">
           {/* Section 1: VStack & HStack 예제 */}
           <Card>
             <CardHeader>
@@ -340,14 +340,14 @@ export default function ContainerExamplePage() {
             </CardHeader>
             <CardContent>
               <VStack spacing={4}>
-                <HStack spacing={3} justify="space-between" className="w-full">
-                  <Button>Button 1</Button>
-                  <Button>Button 2</Button>
-                  <Button>Button 3</Button>
+                <HStack spacing={2} justify="space-between" className="w-full flex-wrap md:flex-nowrap md:gap-3">
+                  <Button size="sm" className="flex-1 md:flex-none">Button 1</Button>
+                  <Button size="sm" className="flex-1 md:flex-none">Button 2</Button>
+                  <Button size="sm" className="flex-1 md:flex-none">Button 3</Button>
                 </HStack>
-                <HStack spacing={3} alignment="center">
-                  <Input placeholder="Enter text..." className="flex-1" />
-                  <Button>Submit</Button>
+                <HStack spacing={2} alignment="center" className="md:gap-3">
+                  <Input placeholder="Enter text..." className="flex-1 text-sm" />
+                  <Button size="sm">Submit</Button>
                 </HStack>
               </VStack>
             </CardContent>
@@ -457,7 +457,7 @@ export default function ContainerExamplePage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="mb-4 text-sm text-muted-foreground">
+              <div className="mb-3 md:mb-4 text-xs md:text-sm text-muted-foreground">
                 <p>아래 스키마는 위에서 보이는 모든 Container 예제들의 전체 구조입니다.</p>
                 <p className="mt-1">Screen → AppBar → Container → VStack → Cards 형태로 중첩되어 있습니다.</p>
                 <p className="mt-2 font-medium text-foreground">
@@ -466,21 +466,21 @@ export default function ContainerExamplePage() {
               </div>
 
               <Tabs defaultValue="dsl" className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="dsl">
-                    🆕 DSL <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">80% 절감</span>
+                <TabsList className="grid w-full grid-cols-2 h-auto">
+                  <TabsTrigger value="dsl" className="text-xs md:text-sm py-2">
+                    🆕 DSL <span className="ml-1 md:ml-2 text-xs bg-green-100 text-green-800 px-1.5 md:px-2 py-0.5 rounded">80% 절감</span>
                   </TabsTrigger>
-                  <TabsTrigger value="json">📦 JSON</TabsTrigger>
+                  <TabsTrigger value="json" className="text-xs md:text-sm py-2">📦 JSON</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="dsl">
-                  <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs max-h-[600px] overflow-y-auto">
+                  <pre className="bg-muted p-2 md:p-4 rounded-md overflow-x-auto text-xs max-h-[400px] md:max-h-[600px] overflow-y-auto">
                     <code>{convertToDSL(completePageSchema)}</code>
                   </pre>
                 </TabsContent>
 
                 <TabsContent value="json">
-                  <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs max-h-[600px] overflow-y-auto">
+                  <pre className="bg-muted p-2 md:p-4 rounded-md overflow-x-auto text-xs max-h-[400px] md:max-h-[600px] overflow-y-auto">
                     <code>{JSON.stringify(completePageSchema, null, 2)}</code>
                   </pre>
                 </TabsContent>

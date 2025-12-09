@@ -4,18 +4,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <div className="text-center space-y-4">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8">
+      <div className="max-w-4xl mx-auto space-y-6 md:space-y-8">
+        <div className="text-center space-y-3 md:space-y-4">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Server-Driven UI
           </h1>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-base md:text-lg lg:text-xl text-muted-foreground px-4">
             스트리밍 기반 서버드리븐 UI를 80% 토큰 절감으로
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-4 md:gap-6 md:grid-cols-2">
           <Card>
             <CardHeader>
               <CardTitle>🚀 실시간 스트리밍</CardTitle>
@@ -84,14 +84,14 @@ export default function Home() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-3 md:gap-4">
                 {/* DSL */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-semibold text-green-600">DSL 형식 ✓</h3>
+                    <h3 className="text-xs md:text-sm font-semibold text-green-600">DSL 형식 ✓</h3>
                     <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">~50 토큰</span>
                   </div>
-                  <div className="bg-muted p-3 rounded-md text-xs font-mono leading-relaxed">
+                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto">
                     <div className="text-blue-600">Card#card-1</div>
                     <div className="ml-3 text-purple-600">@className: w-full</div>
                     <div className="ml-3 text-blue-600">CardHeader#header-1</div>
@@ -111,10 +111,10 @@ export default function Home() {
                 {/* JSON */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-semibold text-orange-600">JSON 형식</h3>
+                    <h3 className="text-xs md:text-sm font-semibold text-orange-600">JSON 형식</h3>
                     <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">~250 토큰</span>
                   </div>
-                  <div className="bg-muted p-3 rounded-md text-xs font-mono leading-relaxed">
+                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto">
                     <div className="text-purple-600">{`{`}</div>
                     <div className="ml-3 text-green-600">&quot;id&quot;: &quot;card-1&quot;,</div>
                     <div className="ml-3 text-green-600">&quot;type&quot;: &quot;Card&quot;,</div>
@@ -134,8 +134,8 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-md">
-                <p className="text-sm text-blue-900 dark:text-blue-100">
+              <div className="mt-3 md:mt-4 p-2 md:p-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-md">
+                <p className="text-xs md:text-sm text-blue-900 dark:text-blue-100">
                   💡 <strong>두 형식 모두 지원:</strong> DSL로 비용 절감 + JSON으로 표준 호환성 확보
                 </p>
               </div>
@@ -143,19 +143,19 @@ export default function Home() {
           </Card>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-3 md:gap-4">
           <Link href="/demo">
-            <Button size="lg" className="text-lg bg-gradient-to-r from-blue-600 to-purple-600">
+            <Button size="default" className="text-sm md:text-base lg:text-lg bg-gradient-to-r from-blue-600 to-purple-600 md:px-6 lg:px-8">
               스트리밍 데모
             </Button>
           </Link>
           <Link href="/components">
-            <Button size="lg" variant="default" className="text-lg">
+            <Button size="default" variant="default" className="text-sm md:text-base lg:text-lg md:px-6 lg:px-8">
               컴포넌트 문서
             </Button>
           </Link>
           <Link href="/demo/container-example">
-            <Button size="lg" variant="outline" className="text-lg">
+            <Button size="default" variant="outline" className="text-sm md:text-base lg:text-lg md:px-6 lg:px-8">
               Container 예제
             </Button>
           </Link>
@@ -164,7 +164,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button size="lg" variant="outline" className="text-lg">
+            <Button size="default" variant="outline" className="text-sm md:text-base lg:text-lg md:px-6 lg:px-8">
               shadcn/ui 문서
             </Button>
           </a>
@@ -178,7 +178,7 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <pre className="bg-background p-4 rounded-md overflow-x-auto text-sm">
+            <pre className="bg-background p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm">
               <code>{`import { useStreamingUI } from '@sdui/core';
 import { StreamingUIRenderer } from '@sdui/react';
 
