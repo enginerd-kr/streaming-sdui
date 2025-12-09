@@ -768,21 +768,17 @@ export default function DemoPage() {
 
       {/* 예제 코드 */}
       <div className="mt-8 space-y-4">
-        <Tabs defaultValue="usage">
-          <TabsList className="grid w-full grid-cols-3 h-auto">
-            <TabsTrigger value="usage" className="text-xs md:text-sm">Usage</TabsTrigger>
-            <TabsTrigger value="dsl" className="text-xs md:text-sm">DSL</TabsTrigger>
-            <TabsTrigger value="json" className="text-xs md:text-sm">JSON</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="usage" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Basic Usage</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-w-full">
-                  <code className="block">{`import { useStreamingUI } from '@sdui/core';
+        {/* Usage Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Basic Usage</CardTitle>
+            <CardDescription>
+              How to use the streaming UI renderer in your application
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-w-full">
+              <code className="block">{`import { useStreamingUI } from '@sdui/core';
 import { StreamingUIRenderer } from '@sdui/react';
 
 function MyComponent() {
@@ -799,16 +795,22 @@ function MyComponent() {
     </div>
   );
 }`}</code>
-                </pre>
-              </CardContent>
-            </Card>
-          </TabsContent>
+            </pre>
+          </CardContent>
+        </Card>
+
+        {/* Schema Examples */}
+        <Tabs defaultValue="dsl">
+          <TabsList className="grid w-full grid-cols-2 h-auto">
+            <TabsTrigger value="dsl" className="text-xs md:text-sm">DSL Schema</TabsTrigger>
+            <TabsTrigger value="json" className="text-xs md:text-sm">JSON Schema</TabsTrigger>
+          </TabsList>
 
           <TabsContent value="dsl" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>
-                  {presetPrompts.find(p => p.id === selectedPreset)?.label} Example - DSL Schema
+                  {presetPrompts.find(p => p.id === selectedPreset)?.label} Example - DSL
                 </CardTitle>
                 <CardDescription>
                   Concise, LLM-friendly syntax (80% smaller)
@@ -828,7 +830,7 @@ function MyComponent() {
             <Card>
               <CardHeader>
                 <CardTitle>
-                  {presetPrompts.find(p => p.id === selectedPreset)?.label} Example - JSON Schema
+                  {presetPrompts.find(p => p.id === selectedPreset)?.label} Example - JSON
                 </CardTitle>
                 <CardDescription>
                   Traditional JSON format
