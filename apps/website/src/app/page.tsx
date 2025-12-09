@@ -4,8 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8">
-      <div className="max-w-4xl mx-auto space-y-6 md:space-y-8">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8 overflow-x-hidden">
+      <div className="w-full max-w-4xl mx-auto space-y-6 md:space-y-8">
         <div className="text-center space-y-3 md:space-y-4">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Server-Driven UI
@@ -91,15 +91,15 @@ export default function Home() {
                     <h3 className="text-xs md:text-sm font-semibold text-green-600">DSL 형식 ✓</h3>
                     <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">~50 토큰</span>
                   </div>
-                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto">
-                    <div className="text-blue-600">Card#card-1</div>
-                    <div className="ml-3 text-purple-600">@className: w-full</div>
-                    <div className="ml-3 text-blue-600">CardHeader#header-1</div>
-                    <div className="ml-6 text-blue-600">CardTitle#title-1: Dashboard</div>
-                    <div className="ml-6 text-blue-600">CardDescription#desc-1:</div>
-                    <div className="ml-9 text-muted-foreground">&quot;View metrics&quot;</div>
-                    <div className="ml-3 text-blue-600">CardContent#content-1</div>
-                    <div className="ml-6 text-muted-foreground">&quot;Total: 1,234&quot;</div>
+                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto max-w-full">
+                    <div className="text-blue-600 whitespace-nowrap">Card#card-1</div>
+                    <div className="ml-3 text-purple-600 whitespace-nowrap">@className: w-full</div>
+                    <div className="ml-3 text-blue-600 whitespace-nowrap">CardHeader#header-1</div>
+                    <div className="ml-6 text-blue-600 whitespace-nowrap">CardTitle#title-1: Dashboard</div>
+                    <div className="ml-6 text-blue-600 whitespace-nowrap">CardDescription#desc-1:</div>
+                    <div className="ml-9 text-muted-foreground whitespace-nowrap">&quot;View metrics&quot;</div>
+                    <div className="ml-3 text-blue-600 whitespace-nowrap">CardContent#content-1</div>
+                    <div className="ml-6 text-muted-foreground whitespace-nowrap">&quot;Total: 1,234&quot;</div>
                   </div>
                   <p className="text-xs text-muted-foreground">
                     • 간결한 문법<br/>
@@ -114,18 +114,18 @@ export default function Home() {
                     <h3 className="text-xs md:text-sm font-semibold text-orange-600">JSON 형식</h3>
                     <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">~250 토큰</span>
                   </div>
-                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto">
-                    <div className="text-purple-600">{`{`}</div>
-                    <div className="ml-3 text-green-600">&quot;id&quot;: &quot;card-1&quot;,</div>
-                    <div className="ml-3 text-green-600">&quot;type&quot;: &quot;Card&quot;,</div>
-                    <div className="ml-3 text-green-600">&quot;props&quot;: {`{`}</div>
-                    <div className="ml-6 text-green-600">&quot;className&quot;: &quot;w-full&quot;</div>
-                    <div className="ml-3 text-green-600">{`}`},</div>
-                    <div className="ml-3 text-green-600">&quot;children&quot;: [</div>
-                    <div className="ml-6 text-blue-600">{`{ "id": "header-1", ... }`},</div>
-                    <div className="ml-6 text-blue-600">{`{ "id": "content-1", ... }`}</div>
-                    <div className="ml-3 text-green-600">]</div>
-                    <div className="text-purple-600">{`}`}</div>
+                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto max-w-full">
+                    <div className="text-purple-600 whitespace-nowrap">{`{`}</div>
+                    <div className="ml-3 text-green-600 whitespace-nowrap">&quot;id&quot;: &quot;card-1&quot;,</div>
+                    <div className="ml-3 text-green-600 whitespace-nowrap">&quot;type&quot;: &quot;Card&quot;,</div>
+                    <div className="ml-3 text-green-600 whitespace-nowrap">&quot;props&quot;: {`{`}</div>
+                    <div className="ml-6 text-green-600 whitespace-nowrap">&quot;className&quot;: &quot;w-full&quot;</div>
+                    <div className="ml-3 text-green-600 whitespace-nowrap">{`}`},</div>
+                    <div className="ml-3 text-green-600 whitespace-nowrap">&quot;children&quot;: [</div>
+                    <div className="ml-6 text-blue-600 whitespace-nowrap">{`{ "id": "header-1", ... }`},</div>
+                    <div className="ml-6 text-blue-600 whitespace-nowrap">{`{ "id": "content-1", ... }`}</div>
+                    <div className="ml-3 text-green-600 whitespace-nowrap">]</div>
+                    <div className="text-purple-600 whitespace-nowrap">{`}`}</div>
                   </div>
                   <p className="text-xs text-muted-foreground">
                     • 표준 형식<br/>
@@ -178,8 +178,8 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <pre className="bg-background p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm">
-              <code>{`import { useStreamingUI } from '@sdui/core';
+            <pre className="bg-background p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-w-full">
+              <code className="block">{`import { useStreamingUI } from '@sdui/core';
 import { StreamingUIRenderer } from '@sdui/react';
 
 function App() {

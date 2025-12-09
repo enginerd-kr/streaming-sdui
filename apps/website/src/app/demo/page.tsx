@@ -511,7 +511,7 @@ export default function DemoPage() {
   ];
 
   return (
-    <div className="container mx-auto p-4 md:p-6 max-w-7xl">
+    <div className="container mx-auto p-4 md:p-6 max-w-7xl overflow-x-hidden">
       <div className="mb-6 md:mb-8">
         <div className="flex flex-col gap-4 mb-4 md:flex-row md:items-center md:justify-between">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">Server-Driven UI Demo</h1>
@@ -781,8 +781,8 @@ export default function DemoPage() {
                 <CardTitle>Basic Usage</CardTitle>
               </CardHeader>
               <CardContent>
-                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm">
-                  <code>{`import { useStreamingUI } from '@sdui/core';
+                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-w-full">
+                  <code className="block">{`import { useStreamingUI } from '@sdui/core';
 import { StreamingUIRenderer } from '@sdui/react';
 
 function MyComponent() {
@@ -816,8 +816,8 @@ function MyComponent() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-h-96 overflow-y-auto">
-                  <code>
+                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-h-96 overflow-y-auto max-w-full">
+                  <code className="block">
                     {dataFormat === 'dsl'
                       ? convertToDSL(presetPrompts.find(p => p.id === selectedPreset)?.schema as UINode)
                       : JSON.stringify(

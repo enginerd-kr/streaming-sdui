@@ -474,14 +474,14 @@ export default function ContainerExamplePage() {
                 </TabsList>
 
                 <TabsContent value="dsl">
-                  <pre className="bg-muted p-2 md:p-4 rounded-md overflow-x-auto text-xs max-h-[400px] md:max-h-[600px] overflow-y-auto">
-                    <code>{convertToDSL(completePageSchema)}</code>
+                  <pre className="bg-muted p-2 md:p-4 rounded-md overflow-x-auto text-xs max-h-[400px] md:max-h-[600px] overflow-y-auto max-w-full">
+                    <code className="block">{convertToDSL(completePageSchema)}</code>
                   </pre>
                 </TabsContent>
 
                 <TabsContent value="json">
-                  <pre className="bg-muted p-2 md:p-4 rounded-md overflow-x-auto text-xs max-h-[400px] md:max-h-[600px] overflow-y-auto">
-                    <code>{JSON.stringify(completePageSchema, null, 2)}</code>
+                  <pre className="bg-muted p-2 md:p-4 rounded-md overflow-x-auto text-xs max-h-[400px] md:max-h-[600px] overflow-y-auto max-w-full">
+                    <code className="block">{JSON.stringify(completePageSchema, null, 2)}</code>
                   </pre>
                 </TabsContent>
               </Tabs>
