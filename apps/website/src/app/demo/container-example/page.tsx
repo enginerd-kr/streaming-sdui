@@ -327,6 +327,7 @@ export default function ContainerExamplePage() {
         }
         position="sticky"
         elevation={1}
+        className="[&>div]:h-16 [&>div]:items-center"
       />
 
       {/* Main Content */}
