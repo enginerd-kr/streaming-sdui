@@ -767,12 +767,12 @@ export default function DemoPage() {
       </div>
 
       {/* 예제 코드 */}
-      <div className="mt-8">
+      <div className="mt-8 space-y-4">
         <Tabs defaultValue="usage">
           <TabsList className="grid w-full grid-cols-3 h-auto">
             <TabsTrigger value="usage" className="text-xs md:text-sm">Usage</TabsTrigger>
-            <TabsTrigger value="schema" className="text-xs md:text-sm">Schema</TabsTrigger>
-            <TabsTrigger value="features" className="text-xs md:text-sm">Features</TabsTrigger>
+            <TabsTrigger value="dsl" className="text-xs md:text-sm">DSL</TabsTrigger>
+            <TabsTrigger value="json" className="text-xs md:text-sm">JSON</TabsTrigger>
           </TabsList>
 
           <TabsContent value="usage" className="space-y-4">
@@ -804,61 +804,48 @@ function MyComponent() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="schema" className="space-y-4">
+          <TabsContent value="dsl" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>
-                  {presetPrompts.find(p => p.id === selectedPreset)?.label} Example{' '}
-                  {dataFormat === 'dsl' ? 'DSL' : 'JSON'} Schema
+                  {presetPrompts.find(p => p.id === selectedPreset)?.label} Example - DSL Schema
                 </CardTitle>
                 <CardDescription>
-                  Selected preset in {dataFormat === 'dsl' ? 'DSL' : 'JSON'} format
+                  Concise, LLM-friendly syntax (80% smaller)
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-h-96 overflow-y-auto max-w-full">
                   <code className="block">
-                    {dataFormat === 'dsl'
-                      ? convertToDSL(presetPrompts.find(p => p.id === selectedPreset)?.schema as UINode)
-                      : JSON.stringify(
-                          presetPrompts.find(p => p.id === selectedPreset)?.schema,
-                          null,
-                          2
-                        )}
+                    {convertToDSL(presetPrompts.find(p => p.id === selectedPreset)?.schema as UINode)}
                   </code>
                 </pre>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="features" className="space-y-4">
-            <div className="grid gap-4 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Key Features</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div>✅ Real-time streaming rendering</div>
-                  <div>✅ shadcn/ui components</div>
-                  <div>✅ Smooth animations</div>
-                  <div>✅ Error handling</div>
-                  <div>✅ TypeScript type safety</div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Supported Formats</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div>🆕 DSL (80% token reduction)</div>
-                  <div>📦 JSON Lines (JSONL)</div>
-                  <div>📦 Server-Sent Events (SSE)</div>
-                  <div>📦 Streaming JSON</div>
-                  <div>📦 Custom parsers</div>
-                </CardContent>
-              </Card>
-            </div>
+          <TabsContent value="json" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>
+                  {presetPrompts.find(p => p.id === selectedPreset)?.label} Example - JSON Schema
+                </CardTitle>
+                <CardDescription>
+                  Traditional JSON format
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-h-96 overflow-y-auto max-w-full">
+                  <code className="block">
+                    {JSON.stringify(
+                      presetPrompts.find(p => p.id === selectedPreset)?.schema,
+                      null,
+                      2
+                    )}
+                  </code>
+                </pre>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </div>
