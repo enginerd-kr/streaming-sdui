@@ -511,36 +511,37 @@ export default function DemoPage() {
   ];
 
   return (
-    <div className="container mx-auto p-4 md:p-6 max-w-7xl overflow-x-hidden">
-      <div className="mb-6 md:mb-8">
-        <div className="flex flex-col gap-4 mb-4 md:flex-row md:items-center md:justify-between">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">Server-Driven UI Demo</h1>
-          <div className="flex flex-wrap gap-2">
-            <Link href="/">
-              <Button variant="outline" size="sm">
-                ← Home
-              </Button>
-            </Link>
-            <Link href="/demo/container-example">
-              <Button variant="outline" size="sm">
-                Container Examples
-              </Button>
-            </Link>
+    <div className="w-full min-h-screen overflow-x-hidden">
+      <div className="container mx-auto p-4 md:p-6 max-w-7xl">
+        <div className="mb-6 md:mb-8">
+          <div className="flex flex-col gap-4 mb-4 md:flex-row md:items-center md:justify-between">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">Server-Driven UI 데모</h1>
+            <div className="flex flex-wrap gap-2">
+              <Link href="/">
+                <Button variant="outline" size="sm" className="text-xs md:text-sm">
+                  ← 홈
+                </Button>
+              </Link>
+              <Link href="/demo/container-example">
+                <Button variant="outline" size="sm" className="text-xs md:text-sm whitespace-nowrap">
+                  Container 예제
+                </Button>
+              </Link>
+            </div>
           </div>
+          <p className="text-sm md:text-base text-muted-foreground">
+            스트리밍을 지원하는 동적 UI 렌더링 데모
+          </p>
         </div>
-        <p className="text-sm md:text-base text-muted-foreground">
-          Dynamic UI rendering with streaming support (GitHub Pages compatible demo)
-        </p>
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+        <div className="flex flex-col gap-4 md:gap-6">
         {/* 입력 영역 */}
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
           <Card>
             <CardHeader>
-              <CardTitle>UI Generator</CardTitle>
+              <CardTitle>UI 생성기</CardTitle>
               <CardDescription>
-                Select a preset or enter a description to generate UI
+                프리셋을 선택하거나 설명을 입력하여 UI를 생성하세요
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -548,7 +549,7 @@ export default function DemoPage() {
                 <Input
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Enter description or select a preset..."
+                  placeholder="설명을 입력하거나 프리셋을 선택하세요..."
                   disabled={isStreaming}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
@@ -565,20 +566,20 @@ export default function DemoPage() {
                   disabled={isStreaming || !prompt.trim()}
                   className="flex-1"
                 >
-                  {isStreaming ? 'Generating UI...' : 'Generate UI'}
+                  {isStreaming ? 'UI 생성 중...' : 'UI 생성'}
                 </Button>
                 <Button
                   onClick={handleReset}
                   variant="outline"
                   disabled={!uiTree && !isStreaming}
                 >
-                  Reset
+                  초기화
                 </Button>
               </div>
 
               {/* 프리셋 버튼 */}
               <div className="space-y-2">
-                <p className="text-sm font-medium">Presets:</p>
+                <p className="text-sm font-medium">프리셋:</p>
                 <div className="flex flex-wrap gap-2">
                   {presetPrompts.map((preset) => (
                     <Button
@@ -590,6 +591,7 @@ export default function DemoPage() {
                       variant={selectedPreset === preset.id ? "default" : "secondary"}
                       size="sm"
                       disabled={isStreaming}
+                      className="text-xs md:text-sm whitespace-nowrap"
                     >
                       {preset.label}
                     </Button>
@@ -600,140 +602,38 @@ export default function DemoPage() {
               {/* 에러 표시 */}
               {error && (
                 <div className="rounded-md border border-destructive bg-destructive/10 p-4 text-destructive">
-                  <p className="font-semibold">Error</p>
+                  <p className="font-semibold">오류</p>
                   <p className="text-sm">{error}</p>
                 </div>
               )}
             </CardContent>
           </Card>
 
-          {/* 설정 카드 */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Settings</CardTitle>
-              <CardDescription>
-                Configure rendering mode and streaming format
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* 1. 데이터 포맷 선택 */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">1. Data Format</Label>
-                <RadioGroup value={dataFormat} onValueChange={(v) => setDataFormat(v as DataFormat)} disabled={isStreaming}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="dsl" id="format-dsl" />
-                    <Label htmlFor="format-dsl" className="font-normal cursor-pointer">
-                      <div>
-                        <div className="font-medium flex items-center gap-2">
-                          🆕 DSL
-                          <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">80% smaller</span>
-                        </div>
-                        <div className="text-xs text-muted-foreground">Concise LLM-friendly syntax</div>
-                      </div>
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="json" id="format-json" />
-                    <Label htmlFor="format-json" className="font-normal cursor-pointer">
-                      <div>
-                        <div className="font-medium">JSON</div>
-                        <div className="text-xs text-muted-foreground">Traditional JSON format</div>
-                      </div>
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              {/* 2. 전송 모드 선택 */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">2. Render Mode</Label>
-                <RadioGroup value={renderMode} onValueChange={(v) => setRenderMode(v as RenderMode)} disabled={isStreaming}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="streaming" id="mode-streaming" />
-                    <Label htmlFor="mode-streaming" className="font-normal cursor-pointer">
-                      <div>
-                        <div className="font-medium">Streaming</div>
-                        <div className="text-xs text-muted-foreground">Progressive UI generation (ChatGPT style)</div>
-                      </div>
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="normal" id="mode-normal" />
-                    <Label htmlFor="mode-normal" className="font-normal cursor-pointer">
-                      <div>
-                        <div className="font-medium">Normal</div>
-                        <div className="text-xs text-muted-foreground">Show complete UI at once</div>
-                      </div>
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              {/* 3. 전송 방식 선택 (스트리밍 모드일 때만) */}
-              {renderMode === 'streaming' && (
-                <div className="space-y-3">
-                  <Label className="text-sm font-medium">3. Transport Protocol</Label>
-                  <RadioGroup value={transportType} onValueChange={(v) => setTransportType(v as TransportType)} disabled={isStreaming}>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="jsonl" id="transport-jsonl" />
-                      <Label htmlFor="transport-jsonl" className="font-normal cursor-pointer">
-                        <div>
-                          <div className="font-medium">JSONL (Recommended)</div>
-                          <div className="text-xs text-muted-foreground">JSON Lines - parse line by line</div>
-                        </div>
-                      </Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="sse" id="transport-sse" />
-                      <Label htmlFor="transport-sse" className="font-normal cursor-pointer">
-                        <div>
-                          <div className="font-medium">SSE</div>
-                          <div className="text-xs text-muted-foreground">Server-Sent Events</div>
-                        </div>
-                      </Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="json" id="transport-json" />
-                      <Label htmlFor="transport-json" className="font-normal cursor-pointer">
-                        <div>
-                          <div className="font-medium">Streaming JSON</div>
-                          <div className="text-xs text-muted-foreground">Partial JSON parsing</div>
-                        </div>
-                      </Label>
-                    </div>
-                  </RadioGroup>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-
         {/* 미리보기 영역 */}
-        <div>
-          <Card className="h-full">
+        <Card className="w-full">
             <CardHeader>
-              <CardTitle>Preview</CardTitle>
+              <CardTitle>미리보기</CardTitle>
               <CardDescription>
-                Generated UI will be displayed here
+                생성된 UI가 여기에 표시됩니다
               </CardDescription>
             </CardHeader>
             <CardContent>
               {!uiTree && !isStreaming && (
-                <div className="flex items-center justify-center h-64 text-muted-foreground">
-                  Select a preset and click &quot;Generate UI&quot; to start
+                <div className="flex items-center justify-center h-32 md:h-48 text-muted-foreground text-sm md:text-base text-center px-4">
+                  프리셋을 선택하고 &quot;UI 생성&quot;을 클릭하여 시작하세요
                 </div>
               )}
 
               {isStreaming && !uiTree && (
-                <div className="flex items-center justify-center h-64">
+                <div className="flex items-center justify-center h-32 md:h-48">
                   <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-                    <p className="text-muted-foreground">Generating UI...</p>
+                    <div className="animate-spin rounded-full h-8 w-8 md:h-12 md:w-12 border-b-2 border-primary mx-auto mb-3 md:mb-4"></div>
+                    <p className="text-muted-foreground text-sm md:text-base">UI 생성 중...</p>
                   </div>
                 </div>
               )}
 
-              <div className="min-h-64">
+              <div className={uiTree ? "min-h-32" : ""}>
                 <StreamingUIRenderer
                   key={renderKey}
                   node={uiTree}
@@ -755,30 +655,129 @@ export default function DemoPage() {
                     <div className="animate-pulse">●</div>
                     <span>
                       {renderMode === 'streaming'
-                        ? `Streaming UI... ${Math.round(streamingProgress)}%`
-                        : 'Generating UI...'}
+                        ? `UI 스트리밍 중... ${Math.round(streamingProgress)}%`
+                        : 'UI 생성 중...'}
                     </span>
                   </div>
                 </div>
               )}
             </CardContent>
+        </Card>
+
+          {/* 설정 카드 */}
+          <Card>
+            <CardHeader>
+              <CardTitle>설정</CardTitle>
+              <CardDescription>
+                렌더링 모드 및 스트리밍 형식 설정
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* 1. 데이터 포맷 선택 */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium">1. 데이터 형식</Label>
+                <RadioGroup value={dataFormat} onValueChange={(v) => setDataFormat(v as DataFormat)} disabled={isStreaming}>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="dsl" id="format-dsl" />
+                    <Label htmlFor="format-dsl" className="font-normal cursor-pointer">
+                      <div>
+                        <div className="font-medium flex items-center gap-2">
+                          🆕 DSL
+                          <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">80% 절감</span>
+                        </div>
+                        <div className="text-xs text-muted-foreground">간결한 LLM 친화적 구문</div>
+                      </div>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="json" id="format-json" />
+                    <Label htmlFor="format-json" className="font-normal cursor-pointer">
+                      <div>
+                        <div className="font-medium">JSON</div>
+                        <div className="text-xs text-muted-foreground">전통적인 JSON 형식</div>
+                      </div>
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              {/* 2. 전송 모드 선택 */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium">2. 렌더링 모드</Label>
+                <RadioGroup value={renderMode} onValueChange={(v) => setRenderMode(v as RenderMode)} disabled={isStreaming}>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="streaming" id="mode-streaming" />
+                    <Label htmlFor="mode-streaming" className="font-normal cursor-pointer">
+                      <div>
+                        <div className="font-medium">스트리밍</div>
+                        <div className="text-xs text-muted-foreground">점진적 UI 생성 (ChatGPT 스타일)</div>
+                      </div>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="normal" id="mode-normal" />
+                    <Label htmlFor="mode-normal" className="font-normal cursor-pointer">
+                      <div>
+                        <div className="font-medium">일반</div>
+                        <div className="text-xs text-muted-foreground">완성된 UI를 한 번에 표시</div>
+                      </div>
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              {/* 3. 전송 방식 선택 (스트리밍 모드일 때만) */}
+              {renderMode === 'streaming' && (
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium">3. 전송 프로토콜</Label>
+                  <RadioGroup value={transportType} onValueChange={(v) => setTransportType(v as TransportType)} disabled={isStreaming}>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="jsonl" id="transport-jsonl" />
+                      <Label htmlFor="transport-jsonl" className="font-normal cursor-pointer">
+                        <div>
+                          <div className="font-medium">JSONL (권장)</div>
+                          <div className="text-xs text-muted-foreground">JSON Lines - 줄 단위로 파싱</div>
+                        </div>
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="sse" id="transport-sse" />
+                      <Label htmlFor="transport-sse" className="font-normal cursor-pointer">
+                        <div>
+                          <div className="font-medium">SSE</div>
+                          <div className="text-xs text-muted-foreground">Server-Sent Events</div>
+                        </div>
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="json" id="transport-json" />
+                      <Label htmlFor="transport-json" className="font-normal cursor-pointer">
+                        <div>
+                          <div className="font-medium">Streaming JSON</div>
+                          <div className="text-xs text-muted-foreground">부분 JSON 파싱</div>
+                        </div>
+                      </Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+              )}
+            </CardContent>
           </Card>
         </div>
-      </div>
 
-      {/* 예제 코드 */}
-      <div className="mt-8 space-y-4">
+        {/* 예제 코드 */}
+        <div className="mt-8 space-y-4 w-full">
         {/* Usage Section */}
         <Card>
           <CardHeader>
-            <CardTitle>Basic Usage</CardTitle>
+            <CardTitle>기본 사용법</CardTitle>
             <CardDescription>
-              How to use the streaming UI renderer in your application
+              애플리케이션에서 스트리밍 UI 렌더러를 사용하는 방법
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-w-full">
-              <code className="block">{`import { useStreamingUI } from '@sdui/core';
+            <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-[10px] sm:text-xs md:text-sm w-full">
+              <code className="block whitespace-pre-wrap break-all md:whitespace-pre md:break-normal">{`import { useStreamingUI } from '@sdui/core';
 import { StreamingUIRenderer } from '@sdui/react';
 
 function MyComponent() {
@@ -802,23 +801,23 @@ function MyComponent() {
         {/* Schema Examples */}
         <Tabs defaultValue="dsl">
           <TabsList className="grid w-full grid-cols-2 h-auto">
-            <TabsTrigger value="dsl" className="text-xs md:text-sm">DSL Schema</TabsTrigger>
-            <TabsTrigger value="json" className="text-xs md:text-sm">JSON Schema</TabsTrigger>
+            <TabsTrigger value="dsl" className="text-xs md:text-sm">DSL 스키마</TabsTrigger>
+            <TabsTrigger value="json" className="text-xs md:text-sm">JSON 스키마</TabsTrigger>
           </TabsList>
 
           <TabsContent value="dsl" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>
-                  {presetPrompts.find(p => p.id === selectedPreset)?.label} Example - DSL
+                  {presetPrompts.find(p => p.id === selectedPreset)?.label} 예제 - DSL
                 </CardTitle>
                 <CardDescription>
-                  Concise, LLM-friendly syntax (80% smaller)
+                  간결한 LLM 친화적 구문 (80% 절감)
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-h-96 overflow-y-auto max-w-full">
-                  <code className="block">
+                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-[10px] sm:text-xs md:text-sm max-h-96 overflow-y-auto w-full">
+                  <code className="block whitespace-pre">
                     {convertToDSL(presetPrompts.find(p => p.id === selectedPreset)?.schema as UINode)}
                   </code>
                 </pre>
@@ -830,15 +829,15 @@ function MyComponent() {
             <Card>
               <CardHeader>
                 <CardTitle>
-                  {presetPrompts.find(p => p.id === selectedPreset)?.label} Example - JSON
+                  {presetPrompts.find(p => p.id === selectedPreset)?.label} 예제 - JSON
                 </CardTitle>
                 <CardDescription>
-                  Traditional JSON format
+                  전통적인 JSON 형식
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-h-96 overflow-y-auto max-w-full">
-                  <code className="block">
+                <pre className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto text-[10px] sm:text-xs md:text-sm max-h-96 overflow-y-auto w-full">
+                  <code className="block whitespace-pre">
                     {JSON.stringify(
                       presetPrompts.find(p => p.id === selectedPreset)?.schema,
                       null,
@@ -850,6 +849,8 @@ function MyComponent() {
             </Card>
           </TabsContent>
         </Tabs>
+        </div>
+        </div>
       </div>
     </div>
   );
