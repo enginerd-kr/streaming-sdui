@@ -47,7 +47,7 @@ export default function ComponentDetailClient({ params }: { params: Promise<{ na
   };
 
   if (!name) {
-    return <div className="container mx-auto py-10 px-4">Loading...</div>;
+    return <div className="container mx-auto py-10 px-4">로딩 중...</div>;
   }
 
   if (!metadata) {
@@ -56,14 +56,14 @@ export default function ComponentDetailClient({ params }: { params: Promise<{ na
         <Link href="/components">
           <Button variant="ghost" size="sm" className="mb-6">
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Components
+            컴포넌트 목록으로
           </Button>
         </Link>
         <Card>
           <CardHeader>
-            <CardTitle>Component Not Found</CardTitle>
+            <CardTitle>컴포넌트를 찾을 수 없습니다</CardTitle>
             <CardDescription>
-              The component &quot;{name}&quot; does not exist.
+              &quot;{name}&quot; 컴포넌트가 존재하지 않습니다.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -78,7 +78,7 @@ export default function ComponentDetailClient({ params }: { params: Promise<{ na
         <Link href="/components">
           <Button variant="ghost" size="sm">
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Components
+            컴포넌트 목록으로
           </Button>
         </Link>
       </div>
@@ -105,11 +105,11 @@ export default function ComponentDetailClient({ params }: { params: Promise<{ na
               <table className="w-full">
                 <thead className="bg-muted/50">
                   <tr>
-                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-semibold">Name</th>
-                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-semibold">Type</th>
-                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-semibold hidden md:table-cell">Description</th>
-                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-semibold hidden lg:table-cell">Default</th>
-                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-semibold">Required</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-semibold">이름</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-semibold">타입</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-semibold hidden md:table-cell">설명</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-semibold hidden lg:table-cell">기본값</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-semibold">필수</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y">
@@ -138,7 +138,7 @@ export default function ComponentDetailClient({ params }: { params: Promise<{ na
                       <td className="px-2 md:px-4 py-2 md:py-3">
                         {prop.required && (
                           <Badge variant="destructive" className="text-xs">
-                            Required
+                            필수
                           </Badge>
                         )}
                       </td>
@@ -155,7 +155,7 @@ export default function ComponentDetailClient({ params }: { params: Promise<{ na
 
       {/* Examples Section */}
       <section className="mb-8 md:mb-12">
-        <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">Examples</h2>
+        <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">예제</h2>
         <div className="space-y-6 md:space-y-8">
           {metadata.examples.map((example, exampleIndex) => (
             <Card key={exampleIndex}>
@@ -166,7 +166,7 @@ export default function ComponentDetailClient({ params }: { params: Promise<{ na
               <CardContent>
                 <Tabs defaultValue="preview" className="w-full">
                   <TabsList className="grid w-full grid-cols-3 h-auto">
-                    <TabsTrigger value="preview" className="text-xs md:text-sm">Preview</TabsTrigger>
+                    <TabsTrigger value="preview" className="text-xs md:text-sm">미리보기</TabsTrigger>
                     <TabsTrigger value="dsl" className="text-xs md:text-sm">DSL</TabsTrigger>
                     <TabsTrigger value="json" className="text-xs md:text-sm">JSON</TabsTrigger>
                   </TabsList>
@@ -190,12 +190,12 @@ export default function ComponentDetailClient({ params }: { params: Promise<{ na
                         {copiedDSL === exampleIndex ? (
                           <>
                             <Check className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-                            <span className="hidden md:inline">Copied!</span>
+                            <span className="hidden md:inline">복사됨!</span>
                           </>
                         ) : (
                           <>
                             <Copy className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-                            <span className="hidden md:inline">Copy</span>
+                            <span className="hidden md:inline">복사</span>
                           </>
                         )}
                       </Button>
@@ -223,12 +223,12 @@ export default function ComponentDetailClient({ params }: { params: Promise<{ na
                         {copiedJSON === exampleIndex ? (
                           <>
                             <Check className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-                            <span className="hidden md:inline">Copied!</span>
+                            <span className="hidden md:inline">복사됨!</span>
                           </>
                         ) : (
                           <>
                             <Copy className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-                            <span className="hidden md:inline">Copy</span>
+                            <span className="hidden md:inline">복사</span>
                           </>
                         )}
                       </Button>

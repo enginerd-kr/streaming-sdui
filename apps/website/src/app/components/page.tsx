@@ -18,26 +18,26 @@ export default function ComponentsPage() {
         <Link href="/">
           <Button variant="ghost" size="sm">
             <Home className="h-4 w-4 mr-2" />
-            Back to Home
+            홈으로 돌아가기
           </Button>
         </Link>
       </div>
 
       {/* Header */}
       <div className="mb-8 md:mb-12 space-y-3 md:space-y-4">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">Components</h1>
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">컴포넌트</h1>
         <p className="text-sm md:text-base lg:text-xl text-muted-foreground max-w-3xl">
-          Beautifully designed components for your server-driven UI.
-          Copy and paste into your apps. Fully customizable. Open Source.
+          Server-Driven UI를 위한 아름답게 디자인된 컴포넌트입니다.
+          앱에 복사하여 붙여넣으세요. 완전히 커스터마이징 가능하며 오픈소스입니다.
         </p>
       </div>
 
       {/* Container Components */}
       <section className="mb-8 md:mb-12">
         <div className="mb-4 md:mb-6">
-          <h2 className="text-xl md:text-2xl font-semibold mb-2">Container Components</h2>
+          <h2 className="text-xl md:text-2xl font-semibold mb-2">Container 컴포넌트</h2>
           <p className="text-sm md:text-base text-muted-foreground">
-            Layout and structure components. The foundation of your screen composition.
+            레이아웃 및 구조 컴포넌트입니다. 화면 구성의 기초가 됩니다.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
@@ -62,9 +62,9 @@ export default function ComponentsPage() {
       {/* Primitive Components */}
       <section className="mb-8 md:mb-12">
         <div className="mb-4 md:mb-6">
-          <h2 className="text-xl md:text-2xl font-semibold mb-2">Primitive Components</h2>
+          <h2 className="text-xl md:text-2xl font-semibold mb-2">Primitive 컴포넌트</h2>
           <p className="text-sm md:text-base text-muted-foreground">
-            shadcn/ui based UI elements. Buttons, inputs, cards and more.
+            shadcn/ui 기반 UI 요소입니다. 버튼, 입력, 카드 등이 포함됩니다.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
@@ -89,9 +89,9 @@ export default function ComponentsPage() {
       {/* HTML Components */}
       <section className="mb-8 md:mb-12">
         <div className="mb-4 md:mb-6">
-          <h2 className="text-xl md:text-2xl font-semibold mb-2">HTML Components</h2>
+          <h2 className="text-xl md:text-2xl font-semibold mb-2">HTML 컴포넌트</h2>
           <p className="text-sm md:text-base text-muted-foreground">
-            Basic HTML elements. div, h1-h6, p, a, img and more.
+            기본 HTML 요소입니다. div, h1-h6, p, a, img 등이 포함됩니다.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">

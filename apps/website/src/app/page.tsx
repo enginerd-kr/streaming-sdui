@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8 overflow-x-hidden">
-      <div className="w-full max-w-4xl mx-auto space-y-6 md:space-y-8">
+      <div className="w-full max-w-4xl mx-auto space-y-6 md:space-y-8 overflow-x-hidden">
         <div className="text-center space-y-3 md:space-y-4">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Server-Driven UI
@@ -15,7 +15,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:gap-6 md:grid-cols-2">
+        <div className="grid gap-4 md:gap-6 md:grid-cols-2 overflow-x-hidden">
           <Card>
             <CardHeader>
               <CardTitle>🚀 실시간 스트리밍</CardTitle>
