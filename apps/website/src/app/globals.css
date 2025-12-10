@@ -84,3 +84,36 @@
     animation: fade-in 0.5s ease-out;
   }
 }
+
+/* Code Syntax Highlighting */
+.code-block {
+  @apply bg-slate-900 dark:bg-slate-950 text-slate-50;
+}
+
+.code-block .token-keyword {
+  @apply text-purple-400;
+}
+
+.code-block .token-function {
+  @apply text-yellow-300;
+}
+
+.code-block .token-variable {
+  @apply text-blue-300;
+}
+
+.code-block .token-string {
+  @apply text-green-400;
+}
+
+.code-block .token-component {
+  @apply text-pink-400;
+}
+
+.code-block .token-punctuation {
+  @apply text-slate-400;
+}
+
+.code-block .token-comment {
+  @apply text-slate-500 italic;
+}

@@ -1,288 +1,368 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowRight, Zap, Palette, Code2, Radio } from 'lucide-react';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8 overflow-x-hidden">
-      <div className="w-full max-w-4xl mx-auto space-y-6 md:space-y-8 overflow-x-hidden">
-        <div className="text-center space-y-3 md:space-y-4">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Server-Driven UI
+    <main className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      {/* Hero Section */}
+      <section className="px-4 pt-12 pb-8 md:pt-20 md:pb-12">
+        <div className="max-w-4xl mx-auto text-center space-y-4 md:space-y-5">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-sm font-medium text-primary mb-4">
+            <Zap className="w-4 h-4" />
+            <span>80% 토큰 절감</span>
+          </div>
+
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Server-Driven UI
+            </span>
           </h1>
-          <p className="text-base md:text-lg lg:text-xl text-muted-foreground px-4">
-            스트리밍 기반 서버드리븐 UI를 80% 토큰 절감으로
+
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            스트리밍 기반 서버드리븐 UI로 LLM이 생성하는 인터페이스를 실시간으로 렌더링하세요
           </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
+            <Link href="/demo">
+              <Button size="lg" className="w-full sm:w-auto gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                스트리밍 데모 <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+            <Link href="/components">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                컴포넌트 문서
+              </Button>
+            </Link>
+          </div>
         </div>
+      </section>
 
-        <div className="grid gap-4 md:gap-6 md:grid-cols-2 overflow-x-hidden">
-          <Card>
-            <CardHeader>
-              <CardTitle>🚀 실시간 스트리밍</CardTitle>
-              <CardDescription>
-                LLM이 생성하는 UI를 실시간으로 렌더링
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                JSON을 스트리밍으로 받아 부드럽게 UI를 구축합니다.
-                ChatGPT처럼 UI가 점진적으로 나타납니다.
-              </p>
-            </CardContent>
-          </Card>
+      {/* Features Section */}
+      <section className="px-4 py-10 md:py-14">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8">
+            주요 기능
+          </h2>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>🎨 커스텀 컴포넌트</CardTitle>
-              <CardDescription>
-                자신만의 디자인 시스템 사용 가능
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Material-UI, Ant Design 등 원하는 디자인 시스템을
-                자유롭게 등록하고 DSL/스트리밍과 함께 사용하세요.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>✨ DSL</CardTitle>
-              <CardDescription>
-                80% 토큰 절감
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                간결한 문법으로 LLM이 훨씬 적은 토큰으로
-                UI를 생성할 수 있어 비용과 속도 면에서 유리합니다.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>📡 다양한 전송 프로토콜</CardTitle>
-              <CardDescription>
-                JSONL, SSE, Streaming JSON 지원
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                여러 스트리밍 프로토콜을 지원하여 다양한 환경에서
-                유연하게 UI를 전송할 수 있습니다.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="md:col-span-2">
-            <CardHeader>
-              <CardTitle>✨ 커스텀 DSL vs JSON - 토큰 사용량 비교</CardTitle>
-              <CardDescription>
-                동일한 UI를 표현하는데 80% 적은 토큰으로 비용과 속도를 절감
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="overflow-x-hidden">
-              <div className="grid md:grid-cols-2 gap-3 md:gap-4">
-                {/* DSL */}
-                <div className="space-y-2 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-xs md:text-sm font-semibold text-green-600">DSL 형식 ✓</h3>
-                    <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">~50 토큰</span>
-                  </div>
-                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto">
-                    <div className="text-blue-600 whitespace-nowrap">Card#card-1</div>
-                    <div className="ml-3 text-purple-600 whitespace-nowrap">@className: w-full</div>
-                    <div className="ml-3 text-blue-600 whitespace-nowrap">CardHeader#header-1</div>
-                    <div className="ml-6 text-blue-600 whitespace-nowrap">CardTitle#title-1: Dashboard</div>
-                    <div className="ml-6 text-blue-600 whitespace-nowrap">CardDescription#desc-1:</div>
-                    <div className="ml-9 text-muted-foreground whitespace-nowrap">&quot;View metrics&quot;</div>
-                    <div className="ml-3 text-blue-600 whitespace-nowrap">CardContent#content-1</div>
-                    <div className="ml-6 text-muted-foreground whitespace-nowrap">&quot;Total: 1,234&quot;</div>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    • 간결한 문법<br/>
-                    • LLM이 이해하기 쉬움<br/>
-                    • 토큰 80% 절감
-                  </p>
+          <div className="grid gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <Card className="border-2 hover:border-primary/50 transition-colors">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4">
+                  <Radio className="w-6 h-6 text-blue-600" />
                 </div>
-
-                {/* JSON */}
-                <div className="space-y-2 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-xs md:text-sm font-semibold text-orange-600">JSON 형식</h3>
-                    <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">~250 토큰</span>
-                  </div>
-                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto">
-                    <div className="text-purple-600 whitespace-nowrap">{`{`}</div>
-                    <div className="ml-3 text-green-600 whitespace-nowrap">&quot;id&quot;: &quot;card-1&quot;,</div>
-                    <div className="ml-3 text-green-600 whitespace-nowrap">&quot;type&quot;: &quot;Card&quot;,</div>
-                    <div className="ml-3 text-green-600 whitespace-nowrap">&quot;props&quot;: {`{`}</div>
-                    <div className="ml-6 text-green-600 whitespace-nowrap">&quot;className&quot;: &quot;w-full&quot;</div>
-                    <div className="ml-3 text-green-600 whitespace-nowrap">{`}`},</div>
-                    <div className="ml-3 text-green-600 whitespace-nowrap">&quot;children&quot;: [</div>
-                    <div className="ml-6 text-blue-600 whitespace-nowrap">{`{ "id": "header-1", ... }`},</div>
-                    <div className="ml-6 text-blue-600 whitespace-nowrap">{`{ "id": "content-1", ... }`}</div>
-                    <div className="ml-3 text-green-600 whitespace-nowrap">]</div>
-                    <div className="text-purple-600 whitespace-nowrap">{`}`}</div>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    • 표준 형식<br/>
-                    • 도구 호환성 우수<br/>
-                    • 디버깅 용이
-                  </p>
-                </div>
-              </div>
-              <div className="mt-3 md:mt-4 p-2 md:p-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-md">
-                <p className="text-xs md:text-sm text-blue-900 dark:text-blue-100">
-                  💡 <strong>두 형식 모두 지원:</strong> DSL로 비용 절감 + JSON으로 표준 호환성 확보
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="md:col-span-2">
-            <CardHeader>
-              <CardTitle>🎨 커스텀 컴포넌트 등록</CardTitle>
-              <CardDescription>
-                자신만의 디자인 시스템을 SDUI와 함께 사용하세요
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="overflow-x-hidden">
-              <div className="space-y-4">
+                <CardTitle className="text-lg">실시간 스트리밍</CardTitle>
+              </CardHeader>
+              <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  DSL과 스트리밍은 그대로 사용하면서, Material-UI, Ant Design 등 원하는 컴포넌트만 등록할 수 있습니다.
+                  LLM이 생성하는 UI를 실시간으로 렌더링. ChatGPT처럼 점진적으로 나타나는 부드러운 UX
                 </p>
+              </CardContent>
+            </Card>
 
-                <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-                  <div className="space-y-3 min-w-0">
-                    <h3 className="text-base font-semibold text-blue-600">방법 1: extendRegistry</h3>
-                    <div className="bg-muted p-3 md:p-4 rounded-md text-sm font-mono leading-relaxed overflow-x-auto">
-                      <div className="text-purple-600">extendRegistry({`{`}</div>
-                      <div className="ml-4 text-green-600">MyButton,</div>
-                      <div className="ml-4 text-green-600">MyCard,</div>
-                      <div className="text-purple-600">{`})`}</div>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      기본 컴포넌트에 커스텀 컴포넌트 추가
-                    </p>
-                  </div>
+            <Card className="border-2 hover:border-primary/50 transition-colors">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
+                  <Palette className="w-6 h-6 text-purple-600" />
+                </div>
+                <CardTitle className="text-lg">커스텀 컴포넌트</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Material-UI, Ant Design 등 원하는 디자인 시스템을 자유롭게 등록하고 사용
+                </p>
+              </CardContent>
+            </Card>
 
-                  <div className="space-y-3 min-w-0">
-                    <h3 className="text-base font-semibold text-purple-600">방법 2: createComponentRegistry</h3>
-                    <div className="bg-muted p-3 md:p-4 rounded-md text-sm font-mono leading-relaxed overflow-x-auto">
-                      <div className="text-purple-600">createComponentRegistry({`{`}</div>
-                      <div className="ml-4 text-green-600">Button: MyBtn,</div>
-                      <div className="ml-4 text-green-600">Card: MyCard,</div>
-                      <div className="text-purple-600">{`})`}</div>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      완전히 새로운 레지스트리 생성
-                    </p>
-                  </div>
+            <Card className="border-2 hover:border-primary/50 transition-colors">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-4">
+                  <Zap className="w-6 h-6 text-green-600" />
+                </div>
+                <CardTitle className="text-lg">DSL 포맷</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  간결한 DSL 문법으로 JSON 대비 80% 토큰 절감. 비용과 속도 면에서 압도적으로 유리
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 hover:border-primary/50 transition-colors">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4">
+                  <Code2 className="w-6 h-6 text-orange-600" />
+                </div>
+                <CardTitle className="text-lg">다양한 프로토콜</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  JSONL, SSE, Streaming JSON 지원. 다양한 환경에서 유연하게 UI 전송
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* DSL Comparison */}
+      <section className="px-4 py-10 md:py-14 bg-muted/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-6 md:mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">
+              왜 DSL인가?
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              동일한 UI를 표현하는데 80% 적은 토큰으로 비용과 속도를 동시에 절감
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* DSL */}
+            <Card className="border-2 border-green-500/50">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-green-600 flex items-center gap-2">
+                    <Zap className="w-5 h-5" />
+                    DSL 형식
+                  </CardTitle>
+                  <span className="text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-3 py-1 rounded-full">
+                    ~50 토큰
+                  </span>
+                </div>
+                <CardDescription>간결하고 효율적</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-muted rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                  <div className="text-blue-600">Card#card-1</div>
+                  <div className="ml-4 text-purple-600">@className: w-full</div>
+                  <div className="ml-4 text-blue-600">CardHeader#header</div>
+                  <div className="ml-8 text-blue-600">CardTitle#title:</div>
+                  <div className="ml-12 text-foreground">&quot;Dashboard&quot;</div>
+                  <div className="ml-8 text-blue-600">CardDescription:</div>
+                  <div className="ml-12 text-muted-foreground">&quot;View metrics&quot;</div>
+                  <div className="ml-4 text-blue-600">CardContent:</div>
+                  <div className="ml-8 text-foreground">&quot;Total: 1,234&quot;</div>
                 </div>
 
-                <div className="space-y-3">
-                  <div className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto">
-                    <pre className="text-xs md:text-sm">
-                      <code className="block text-muted-foreground whitespace-pre">{`import { extendRegistry } from '@sdui/react';
-import { Button, Card } from './my-design-system';
-
-const registry = extendRegistry({ Button, Card });
-
-<StreamingUIRenderer
-  node={uiTree}
-  context={{ registry }}
-/>`}</code>
-                    </pre>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                    <span>간결한 문법</span>
                   </div>
-
-                  <div className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto">
-                    <pre className="text-xs md:text-sm">
-                      <code className="block text-muted-foreground whitespace-pre">{`import {
-  createComponentRegistry,
-  containerComponents,  // Screen, AppBar, VStack 등
-  htmlComponents        // div, span, p 등
-} from '@sdui/react';
-
-const registry = createComponentRegistry({
-  ...containerComponents,  // Container 컴포넌트 전체
-  ...htmlComponents,       // HTML 요소 전체
-  Button: MyButton,        // 커스텀 컴포넌트
-});
-
-<StreamingUIRenderer
-  node={uiTree}
-  context={{ registry }}
-/>`}</code>
-                    </pre>
+                  <div className="flex items-center gap-2 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                    <span>LLM이 이해하기 쉬움</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                    <span className="font-semibold">토큰 80% 절감</span>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* JSON */}
+            <Card className="border-2 border-orange-500/50">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-orange-600 flex items-center gap-2">
+                    <Code2 className="w-5 h-5" />
+                    JSON 형식
+                  </CardTitle>
+                  <span className="text-xs font-semibold bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400 px-3 py-1 rounded-full">
+                    ~250 토큰
+                  </span>
+                </div>
+                <CardDescription>표준 포맷</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-muted rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                  <div className="text-purple-600">{`{`}</div>
+                  <div className="ml-4 text-green-600">&quot;id&quot;: &quot;card-1&quot;,</div>
+                  <div className="ml-4 text-green-600">&quot;type&quot;: &quot;Card&quot;,</div>
+                  <div className="ml-4 text-green-600">&quot;props&quot;: {`{`}</div>
+                  <div className="ml-8 text-green-600">&quot;className&quot;: &quot;w-full&quot;</div>
+                  <div className="ml-4 text-green-600">{`}`},</div>
+                  <div className="ml-4 text-green-600">&quot;children&quot;: [</div>
+                  <div className="ml-8 text-blue-600">{`{ "id": "header", ... }`},</div>
+                  <div className="ml-8 text-blue-600">{`{ "id": "content", ... }`}</div>
+                  <div className="ml-4 text-green-600">]</div>
+                  <div className="text-purple-600">{`}`}</div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-orange-500" />
+                    <span>표준 형식</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-orange-500" />
+                    <span>도구 호환성 우수</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-orange-500" />
+                    <span>디버깅 용이</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="mt-6 p-4 md:p-5 bg-blue-50 dark:bg-blue-950/20 border-2 border-blue-200 dark:border-blue-800 rounded-xl">
+            <p className="text-center text-sm md:text-base text-blue-900 dark:text-blue-100">
+              💡 <strong>두 형식 모두 지원:</strong> DSL로 비용 절감 + JSON으로 표준 호환성 확보
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Custom Components */}
+      <section className="px-4 py-10 md:py-14">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-6 md:mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">
+              커스텀 컴포넌트 등록
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              자신만의 디자인 시스템을 SDUI와 함께 사용하세요
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4 md:gap-6 mb-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-blue-600">extendRegistry</CardTitle>
+                <CardDescription>기본 컴포넌트에 추가</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="bg-muted rounded-lg p-3 font-mono text-sm overflow-x-auto">
+                  <div className="text-purple-600">extendRegistry({`{`}</div>
+                  <div className="ml-4 text-green-600">MyButton,</div>
+                  <div className="ml-4 text-green-600">MyCard,</div>
+                  <div className="text-purple-600">{`})`}</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-purple-600">createComponentRegistry</CardTitle>
+                <CardDescription>새로운 레지스트리 생성</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="bg-muted rounded-lg p-3 font-mono text-sm overflow-x-auto">
+                  <div className="text-purple-600">createComponentRegistry({`{`}</div>
+                  <div className="ml-4 text-green-600">Button: MyBtn,</div>
+                  <div className="ml-4 text-green-600">Card: MyCard,</div>
+                  <div className="text-purple-600">{`})`}</div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card className="bg-muted/50">
+            <CardHeader>
+              <CardTitle className="text-base">사용 예제</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg p-3 md:p-4 overflow-x-auto">
+                <pre className="text-xs md:text-sm leading-relaxed font-mono">
+                  <code className="block text-slate-100">
+                    <span className="text-purple-400">import</span> {`{ `}<span className="text-cyan-300">extendRegistry</span> {`} `}<span className="text-purple-400">from</span> <span className="text-emerald-400">'@sdui/react'</span>;{'\n'}
+                    <span className="text-purple-400">import</span> {`{ `}<span className="text-cyan-300">Button</span>, <span className="text-cyan-300">Card</span> {`} `}<span className="text-purple-400">from</span> <span className="text-emerald-400">'./my-design-system'</span>;{'\n'}
+                    {'\n'}
+                    <span className="text-purple-400">const</span> <span className="text-blue-300">registry</span> <span className="text-slate-400">=</span> <span className="text-yellow-300">extendRegistry</span>({`({ `}<span className="text-cyan-300">Button</span>, <span className="text-cyan-300">Card</span> {`})`});{'\n'}
+                    {'\n'}
+                    <span className="text-slate-400">&lt;</span><span className="text-pink-400">StreamingUIRenderer</span>{'\n'}
+                    {'  '}<span className="text-sky-300">node</span>=<span className="text-yellow-300">{`{`}</span>uiTree<span className="text-yellow-300">{`}`}</span>{'\n'}
+                    {'  '}<span className="text-sky-300">context</span>=<span className="text-yellow-300">{`{{`}</span> registry <span className="text-yellow-300">{`}}`}</span>{'\n'}
+                    <span className="text-slate-400">/&gt;</span>
+                  </code>
+                </pre>
               </div>
             </CardContent>
           </Card>
         </div>
+      </section>
 
-        <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-          <Link href="/demo">
-            <Button size="default" className="text-sm md:text-base lg:text-lg bg-gradient-to-r from-blue-600 to-purple-600 md:px-6 lg:px-8">
-              스트리밍 데모
-            </Button>
-          </Link>
-          <Link href="/components">
-            <Button size="default" variant="default" className="text-sm md:text-base lg:text-lg md:px-6 lg:px-8">
-              컴포넌트 문서
-            </Button>
-          </Link>
-          <Link href="/demo/container-example">
-            <Button size="default" variant="outline" className="text-sm md:text-base lg:text-lg md:px-6 lg:px-8">
-              Container 예제
-            </Button>
-          </Link>
-          <a
-            href="https://ui.shadcn.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button size="default" variant="outline" className="text-sm md:text-base lg:text-lg md:px-6 lg:px-8">
-              shadcn/ui 문서
-            </Button>
-          </a>
+      {/* Quick Start */}
+      <section className="px-4 py-10 md:py-14 bg-muted/30">
+        <div className="max-w-4xl mx-auto">
+          <Card className="border-2 border-primary/20">
+            <CardHeader>
+              <CardTitle className="text-xl md:text-2xl">빠른 시작</CardTitle>
+              <CardDescription>
+                DSL 포맷으로 80% 토큰 절감! 🚀
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg p-3 md:p-4 overflow-x-auto">
+                <pre className="text-xs md:text-sm leading-relaxed font-mono">
+                  <code className="block text-slate-100">
+                    <span className="text-purple-400">import</span> {`{ `}<span className="text-cyan-300">useStreamingUI</span> {`} `}<span className="text-purple-400">from</span> <span className="text-emerald-400">'@sdui/core'</span>;{'\n'}
+                    <span className="text-purple-400">import</span> {`{ `}<span className="text-cyan-300">StreamingUIRenderer</span> {`} `}<span className="text-purple-400">from</span> <span className="text-emerald-400">'@sdui/react'</span>;{'\n'}
+                    {'\n'}
+                    <span className="text-purple-400">function</span> <span className="text-yellow-300">App</span>() {`{`}{'\n'}
+                    {'  '}<span className="text-purple-400">const</span> {`{ `}<span className="text-blue-300">uiTree</span>, <span className="text-blue-300">start</span> {`} `}<span className="text-slate-400">=</span> <span className="text-yellow-300">useStreamingUI</span>({`({`}{'\n'}
+                    {'    '}<span className="text-sky-300">format</span>: <span className="text-emerald-400">'dsl'</span>, <span className="text-slate-500">// JSON 대비 80% 토큰 절감!</span>{'\n'}
+                    {'  '}{`});`}{'\n'}
+                    {'\n'}
+                    {'  '}<span className="text-purple-400">return</span> ({'\n'}
+                    {'    '}<span className="text-slate-400">&lt;&gt;</span>{'\n'}
+                    {'      '}<span className="text-slate-400">&lt;</span><span className="text-pink-400">button</span> <span className="text-sky-300">onClick</span>=<span className="text-yellow-300">{`{`}</span>() <span className="text-slate-400">=&gt;</span> <span className="text-yellow-300">start</span>(<span className="text-emerald-400">'/api/generate-ui'</span>, {`{`}{'\n'}
+                    {'        '}<span className="text-sky-300">prompt</span>: <span className="text-emerald-400">'Create a dashboard'</span>{'\n'}
+                    {'      '}{`})`}<span className="text-yellow-300">{`}`}</span><span className="text-slate-400">&gt;</span>{'\n'}
+                    {'        '}Generate UI{'\n'}
+                    {'      '}<span className="text-slate-400">&lt;/</span><span className="text-pink-400">button</span><span className="text-slate-400">&gt;</span>{'\n'}
+                    {'      '}<span className="text-slate-400">&lt;</span><span className="text-pink-400">StreamingUIRenderer</span> <span className="text-sky-300">node</span>=<span className="text-yellow-300">{`{`}</span>uiTree<span className="text-yellow-300">{`}`}</span> <span className="text-slate-400">/&gt;</span>{'\n'}
+                    {'    '}<span className="text-slate-400">&lt;/&gt;</span>{'\n'}
+                    {'  '});{'\n'}
+                    {`}`}
+                  </code>
+                </pre>
+              </div>
+            </CardContent>
+          </Card>
         </div>
+      </section>
 
-        <Card className="bg-muted">
-          <CardHeader>
-            <CardTitle>빠른 시작</CardTitle>
-            <CardDescription>
-              DSL 포맷으로 80% 토큰 절감! 🚀
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="overflow-x-auto max-w-full">
-            <pre className="bg-background p-3 md:p-4 rounded-md text-xs md:text-sm">
-              <code className="block whitespace-pre">{`import { useStreamingUI } from '@sdui/core';
-import { StreamingUIRenderer } from '@sdui/react';
+      {/* CTA Section */}
+      <section className="px-4 py-12 md:py-16">
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <h2 className="text-2xl md:text-3xl font-bold">
+            지금 바로 시작하세요
+          </h2>
 
-function App() {
-  const { uiTree, start } = useStreamingUI({
-    format: 'dsl', // JSON 대비 80% 토큰 절감!
-  });
-
-  return (
-    <>
-      <button onClick={() => start('/api/generate-ui', {
-        prompt: 'Create a dashboard'
-      })}>
-        Generate UI
-      </button>
-      <StreamingUIRenderer node={uiTree} />
-    </>
-  );
-}`}</code>
-            </pre>
-          </CardContent>
-        </Card>
-      </div>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
+            <Link href="/demo">
+              <Button size="lg" className="w-full sm:w-auto gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                스트리밍 데모 <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+            <Link href="/components">
+              <Button size="lg" variant="default" className="w-full sm:w-auto">
+                컴포넌트 문서
+              </Button>
+            </Link>
+            <Link href="/demo/container-example">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                Container 예제
+              </Button>
+            </Link>
+            <a
+              href="https://ui.shadcn.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                shadcn/ui 문서
+              </Button>
+            </a>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
