@@ -83,15 +83,15 @@ export default function Home() {
                 동일한 UI를 표현하는데 80% 적은 토큰으로 비용과 속도를 절감
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="overflow-x-hidden">
               <div className="grid md:grid-cols-2 gap-3 md:gap-4">
                 {/* DSL */}
-                <div className="space-y-2">
+                <div className="space-y-2 min-w-0">
                   <div className="flex items-center justify-between">
                     <h3 className="text-xs md:text-sm font-semibold text-green-600">DSL 형식 ✓</h3>
                     <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">~50 토큰</span>
                   </div>
-                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto max-w-full">
+                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto">
                     <div className="text-blue-600 whitespace-nowrap">Card#card-1</div>
                     <div className="ml-3 text-purple-600 whitespace-nowrap">@className: w-full</div>
                     <div className="ml-3 text-blue-600 whitespace-nowrap">CardHeader#header-1</div>
@@ -109,12 +109,12 @@ export default function Home() {
                 </div>
 
                 {/* JSON */}
-                <div className="space-y-2">
+                <div className="space-y-2 min-w-0">
                   <div className="flex items-center justify-between">
                     <h3 className="text-xs md:text-sm font-semibold text-orange-600">JSON 형식</h3>
                     <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">~250 토큰</span>
                   </div>
-                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto max-w-full">
+                  <div className="bg-muted p-2 md:p-3 rounded-md text-xs font-mono leading-relaxed overflow-x-auto">
                     <div className="text-purple-600 whitespace-nowrap">{`{`}</div>
                     <div className="ml-3 text-green-600 whitespace-nowrap">&quot;id&quot;: &quot;card-1&quot;,</div>
                     <div className="ml-3 text-green-600 whitespace-nowrap">&quot;type&quot;: &quot;Card&quot;,</div>
@@ -149,14 +149,14 @@ export default function Home() {
                 자신만의 디자인 시스템을 SDUI와 함께 사용하세요
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="overflow-x-hidden">
               <div className="space-y-4">
                 <p className="text-sm text-muted-foreground">
                   DSL과 스트리밍은 그대로 사용하면서, Material-UI, Ant Design 등 원하는 컴포넌트만 등록할 수 있습니다.
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-                  <div className="space-y-3">
+                  <div className="space-y-3 min-w-0">
                     <h3 className="text-base font-semibold text-blue-600">방법 1: extendRegistry</h3>
                     <div className="bg-muted p-3 md:p-4 rounded-md text-sm font-mono leading-relaxed overflow-x-auto">
                       <div className="text-purple-600">extendRegistry({`{`}</div>
@@ -169,7 +169,7 @@ export default function Home() {
                     </p>
                   </div>
 
-                  <div className="space-y-3">
+                  <div className="space-y-3 min-w-0">
                     <h3 className="text-base font-semibold text-purple-600">방법 2: createComponentRegistry</h3>
                     <div className="bg-muted p-3 md:p-4 rounded-md text-sm font-mono leading-relaxed overflow-x-auto">
                       <div className="text-purple-600">createComponentRegistry({`{`}</div>
@@ -184,9 +184,9 @@ export default function Home() {
                 </div>
 
                 <div className="space-y-3">
-                  <div className="bg-muted p-3 md:p-4 rounded-md">
-                    <pre className="text-xs md:text-sm overflow-x-auto">
-                      <code className="block text-muted-foreground">{`import { extendRegistry } from '@sdui/react';
+                  <div className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto">
+                    <pre className="text-xs md:text-sm">
+                      <code className="block text-muted-foreground whitespace-pre">{`import { extendRegistry } from '@sdui/react';
 import { Button, Card } from './my-design-system';
 
 const registry = extendRegistry({ Button, Card });
@@ -198,9 +198,9 @@ const registry = extendRegistry({ Button, Card });
                     </pre>
                   </div>
 
-                  <div className="bg-muted p-3 md:p-4 rounded-md">
-                    <pre className="text-xs md:text-sm overflow-x-auto">
-                      <code className="block text-muted-foreground">{`import {
+                  <div className="bg-muted p-3 md:p-4 rounded-md overflow-x-auto">
+                    <pre className="text-xs md:text-sm">
+                      <code className="block text-muted-foreground whitespace-pre">{`import {
   createComponentRegistry,
   containerComponents,  // Screen, AppBar, VStack 등
   htmlComponents        // div, span, p 등
@@ -258,9 +258,9 @@ const registry = createComponentRegistry({
               DSL 포맷으로 80% 토큰 절감! 🚀
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <pre className="bg-background p-3 md:p-4 rounded-md overflow-x-auto text-xs md:text-sm max-w-full">
-              <code className="block">{`import { useStreamingUI } from '@sdui/core';
+          <CardContent className="overflow-x-auto max-w-full">
+            <pre className="bg-background p-3 md:p-4 rounded-md text-xs md:text-sm">
+              <code className="block whitespace-pre">{`import { useStreamingUI } from '@sdui/core';
 import { StreamingUIRenderer } from '@sdui/react';
 
 function App() {
